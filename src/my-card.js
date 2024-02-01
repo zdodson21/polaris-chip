@@ -37,9 +37,6 @@ export class MyCard extends LitElement {
         width: 200px;
       }
 
-      div
-
-      
     `;
   }
 
