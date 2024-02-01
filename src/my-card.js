@@ -13,24 +13,45 @@ export class MyCard extends LitElement {
 
   constructor() {
     super();
-    this.title = "My card";
+    this.header = "My Card";
+    this.text = "This is filler text"
+    this.meme = "#"
+    this.buttonText = "Button"
+    this.buttonLink = "#"
   }
 
   static get styles() {
     return css`
       :host {
-        display: block;
+        display: inline-flex;
       }
+
+      div {
+        background-color: turquoise;
+        width: 400px;
+        text-align: center;
+        margin: 5px;
+      }
+
+      div img {
+        width: 200px;
+      }
+
+      
     `;
   }
 
   render() {
-    return html`<div>${this.title}</div>`;
+    return html`<div>${this.header} <br> ${this.text} <br> <img src="${this.meme}" alt="This is a meme"> <br> <a href="${this.buttonLink}"><button>${this.buttonText}</button></a></div>`;
   }
 
   static get properties() {
     return {
-      title: { type: String },
+      header: { type: String },
+      text:  { type: String},
+      meme:  { type: String},
+      buttonText: { type: String},
+      buttonLink: { type: String},
     };
   }
 }
