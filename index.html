@@ -20,6 +20,10 @@
       margin: 16px;
       /* font-size: 24px; */
     }
+
+    .change-color {
+      background-color: orange;
+    }
   </style>
   <title>polaris-chip / my-card</title>
 </head>
@@ -96,10 +100,10 @@ document.querySelector('#change-image').addEventListener('click', (e) => {
 
 // Change Background Color
 document.getElementById('change-background').addEventListener('click', (e) => {
-  if (document.getElementById('card').classList.contains('change-color')) {
-    document.getElementById('card').classList.remove('change-color')
+  if (document.querySelector('.modify-card').classList.contains('change-color')) {
+    document.querySelector('.modify').classList.remove('change-color')
   } else {
-    document.getElementById('card').classList.add('change-color')
+    document.querySelector('.modify-card').classList.add('change-color')
   }
 
 })
