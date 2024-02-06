@@ -49,8 +49,8 @@ export class MyCard extends LitElement {
       header: { type: String },
       text:  { type: String},
       meme:  { type: String},
-      buttonText: { type: String},
-      buttonLink: { type: String},
+      buttonText: { type: String, attribute: 'button-text'},
+      buttonLink: { type: String, attribute: 'button-link'},
     };
   }
 }
