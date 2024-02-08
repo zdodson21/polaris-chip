@@ -75,7 +75,7 @@ document.querySelector('#change-title').addEventListener("click", (e) => {
   console.log('Change Title Button Pressed')
   if (titleChanged === false) {
     console.log('If acknowledged...')
-    const titleChange = document.querySelector('.modify-card').innerText = 'WOW A NEW TITLE!!!';
+    const titleChange = document.querySelector('my-card').shadowRoot.querySelector('.card-header').innerText = 'WOW A NEW TITLE!!!';
     console.log('Title changed...')
     const buttonChange = document.querySelector('#change-title').innerText = 'Change Title Back';
     console.log('button changed...')
