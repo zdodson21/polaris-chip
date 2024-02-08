@@ -109,6 +109,8 @@ document.querySelector('#change-background').addEventListener('click', (e) => {
     document.querySelector('.modify').classList.remove('change-color')
   } else {
     document.querySelector('my-card').shadowRoot.querySelector('.whole-card').classList.add('change-color')
+    document.querySelector('my-card').shadowRoot.querySelector('.whole-card details').classList.add('change-color')
+    document.querySelector('my-card').shadowRoot.querySelector('.whole-card details div').classList.add('change-color')
   }
 
 })
