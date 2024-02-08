@@ -94,12 +94,12 @@ let imageChanged = false;
 
 document.querySelector('#change-image').addEventListener('click', (e) => {
   if (imageChanged === false) {
-    const imgChange = document.querySelector('img').src = "https://i.redd.it/32vqf2dfl5a11.jpg";
-    const buttonChange = document.getElementById('change-image').innerText = 'Change Image Back'
+    const imgChange = document.querySelector('my-card').shadowRoot.querySelector('img').src = "https://i.redd.it/32vqf2dfl5a11.jpg";
+    const buttonChange = document.querySelector('#change-image').innerText = 'Change Image Back'
     imageChanged = true;
   } else {
-    const imgChange = document.querySelector('img').src = "https://media2.giphy.com/media/yYSSBtDgbbRzq/giphy.gif?cid=ecf05e474unthi9kin9jwi2th7oyx4vuy30igipopfic1v8n&ep=v1_gifs_search&rid=giphy.gif&ct=g";
-    const buttonChange = document.getElementById('change-image').innerText = 'Change Image'
+    const imgChange = document.querySelector('my-card').shadowRoot.querySelector('img').src = "https://media2.giphy.com/media/yYSSBtDgbbRzq/giphy.gif?cid=ecf05e474unthi9kin9jwi2th7oyx4vuy30igipopfic1v8n&ep=v1_gifs_search&rid=giphy.gif&ct=g";
+    const buttonChange = document.querySelector('#change-image').innerText = 'Change Image'
     imageChanged = false;
   }
 })
