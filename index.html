@@ -49,7 +49,7 @@
   
   <div class="wrapper">
     <div id="card">
-      <my-card class="modify-card" header="AMAZING EPIC CARD!!!" text="This image is a gif which details how fun working with CSS can be. As you an surely see (unless giphy has crashed), Peter Griffin is having a lot of fun trying to lower this blind, which is supposed to represent the difficulties of using CSS to make your website look how you want it to (especially with centering things). This gif also represents my current feelings towards CodePen ಥ‿ಥ" meme="https://media2.giphy.com/media/yYSSBtDgbbRzq/giphy.gif?cid=ecf05e474unthi9kin9jwi2th7oyx4vuy30igipopfic1v8n&ep=v1_gifs_search&rid=giphy.gif&ct=g" button-text="Hax Website" button-link="https://hax.psu.edu/"></my-card>
+      <my-card class="modify-card" header="AMAZING EPIC CARD!!!" text="This image is a gif which details how fun working with CSS can be. As you an surely see (unless giphy has crashed), Peter Griffin is having a lot of fun trying to lower this blind, which is supposed to represent the difficulties of using CSS to make your website look how you want it to (especially with centering things). This gif also represents my current feelings towards CodePen ಥ‿ಥ" meme="https://media2.giphy.com/media/yYSSBtDgbbRzq/giphy.gif?cid=ecf05e474unthi9kin9jwi2th7oyx4vuy30igipopfic1v8n&ep=v1_gifs_search&rid=giphy.gif&ct=g" button-text="Hax Website" button-link="https://hax.psu.edu/" description="WOW A DESCRIPTION!!!"></my-card>
       <my-card header="This is a second card" text="Here's another funny meme!" meme="https://i.redd.it/32vqf2dfl5a11.jpg" button-text="AMAZING VIDEO!!!!" button-link="https://www.youtube.com/watch?v=dQw4w9WgXcQ"></my-card>
       <my-card header="Wow another card?" text="Are you clicking the buttons?" meme="https://i.pinimg.com/564x/a0/9d/2b/a09d2be426b6758610afb82a463bd7d5.jpg" button-link="https://www.youtube.com/watch?v=bQlpDiXPZHQ" button-text="Literally just a commercial for life alert lol"></my-card>
       <my-card header="Here's a cuter meme" text="kidding it's cursed" meme="https://i.kym-cdn.com/photos/images/newsfeed/001/235/445/b1d.jpg" button-link="https://www.youtube.com/watch?v=_Pfr7P5U0tE" button-text="This video is actually cute tho"></my-card>
@@ -75,7 +75,7 @@ document.querySelector('#change-title').addEventListener("click", (e) => {
   console.log('Change Title Button Pressed')
   if (titleChanged === false) {
     console.log('If acknowledged...')
-    const titleChange = document.querySelector('.card-header').innerText = 'WOW A NEW TITLE!!!';
+    const titleChange = document.querySelector('.modify-card').innerText = 'WOW A NEW TITLE!!!';
     console.log('Title changed...')
     const buttonChange = document.querySelector('#change-title').innerText = 'Change Title Back';
     console.log('button changed...')
