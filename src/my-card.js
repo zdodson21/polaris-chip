@@ -41,7 +41,7 @@ export class MyCard extends LitElement {
   }
 
   render() {
-    return html`<div><h1>${this.header}</h1>  <p>${this.text}</p>  <img src="${this.meme}" alt="This is a meme"> <br> <a href="${this.buttonLink}" target="_blank" rel="noopener noreferrer"><button>${this.buttonText}</button></a></div>`;
+    return html`<div><h1 class="card-header">${this.header}</h1>  <p>${this.text}</p>  <img src="${this.meme}" alt="This is a meme"> <br> <a href="${this.buttonLink}" target="_blank" rel="noopener noreferrer"><button>${this.buttonText}</button></a></div>`;
   }
 
   static get properties() {

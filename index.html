@@ -72,14 +72,20 @@ document.querySelector('#copy').addEventListener("click", (e) => {
 let titleChanged = false;
 
 document.querySelector('#change-title').addEventListener("click", (e) => {
+  console.log('Change Title Button Pressed')
   if (titleChanged === false) {
-    const titleChange = document.querySelector('.title').innerText = 'WOW A NEW TITLE!!!';
-    const buttonChange = document.getElementById('change-title').innerText = "Change Title Back";
+    console.log('If acknowledged...')
+    const titleChange = document.querySelector('.card-header').innerText = 'WOW A NEW TITLE!!!';
+    console.log('Title changed...')
+    const buttonChange = document.querySelector('#change-title').innerText = 'Change Title Back';
+    console.log('button changed...')
     titleChanged = true;
+    console.log('done')
   } else {
-    const titleChange = document.querySelector('.title').innerText = 'AMAZING EPIC CARD!!!';
-    const buttonChange = document.getElementById('change-title').innerText = 'Change Title';
+    const titleChange = document.querySelector('.card-header').innerText = 'AMAZING EPIC CARD!!!';
+    const buttonChange = document.querySelector('#change-title').innerText = 'Change Title';
     titleChanged = false;
+    console.log('Title changed back')
   }
 })
 
