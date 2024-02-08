@@ -74,6 +74,9 @@ export class MyCard extends LitElement {
         width: 200px;
       }
 
+      .change-color {
+        background-color: orange;
+      }
     `;
   }
 
@@ -89,7 +92,7 @@ export class MyCard extends LitElement {
 
   render() {
     return html`
-      <div>
+      <div class='whole-card'>
         <h1 class="card-header">${this.header}</h1>  
         <p>${this.text}</p>  
         <img src="${this.meme}" alt="This is a meme"> <br> 

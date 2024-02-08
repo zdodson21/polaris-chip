@@ -21,9 +21,7 @@
       /* font-size: 24px; */
     }
 
-    .change-color {
-      background-color: orange;
-    }
+
   </style>
   <title>polaris-chip / my-card</title>
 </head>
@@ -60,7 +58,8 @@
   <script type="module" src="./src/polaris-chip.js"></script>
   <script type="module" src="./src/my-card.js"></script>
   <script>
-    // Card Duplication (THIS ONE TECHNICALLY WORKS)
+
+    // Card Duplication (does not work correctly, copies default card, but not any changes)
 document.querySelector('#copy').addEventListener("click", (e) => {
   if (document.querySelectorAll('#card').length < 10) {
       const node = document.querySelector('.wrapper #card .modify-card').cloneNode(true);
@@ -105,11 +104,11 @@ document.querySelector('#change-image').addEventListener('click', (e) => {
 })
 
 // Change Background Color
-document.getElementById('change-background').addEventListener('click', (e) => {
-  if (document.querySelector('.modify-card').classList.contains('change-color')) {
+document.querySelector('#change-background').addEventListener('click', (e) => {
+  if (document.querySelector('my-card').shadowRoot.querySelector('.whole-card').classList.contains('change-color')) {
     document.querySelector('.modify').classList.remove('change-color')
   } else {
-    document.querySelector('.modify-card').classList.add('change-color')
+    document.querySelector('my-card').shadowRoot.querySelector('.whole-card').classList.add('change-color')
   }
 
 })
