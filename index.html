@@ -62,7 +62,7 @@
     // Card Duplication (does not work correctly, copies default card, but not any changes)
 document.querySelector('#copy').addEventListener("click", (e) => {
   if (document.querySelectorAll('#card').length < 10) {
-      const node = document.querySelector('.wrapper #card .modify-card').cloneNode(true);
+      const node = document.querySelector('.wrapper #card .modify-card').shadowRoot.querySelector('.whole-card').cloneNode(true);
       document.querySelector('.wrapper').appendChild(node);
   }
 })
@@ -116,7 +116,7 @@ document.querySelector('#change-background').addEventListener('click', (e) => {
 })
 
 // Delete Card (Needs fixing)
-document.getElementById('delete').addEventListener('click', (e) => {
+document.querySelector('#delete').addEventListener('click', (e) => {
   if (document.querySelectorAll('#card').length !== 1) {
     document.querySelector('.modify-card').remove();
   }

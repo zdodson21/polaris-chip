@@ -62,7 +62,7 @@ export class MyCard extends LitElement {
         width: 300px;
       }
 
-      div {
+      .whole-card {
         background-color: turquoise;
         width: 400px;
         text-align: center;
