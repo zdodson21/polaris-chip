@@ -22,6 +22,7 @@
     }
 
 
+
   </style>
   <title>polaris-chip / my-card</title>
 </head>
@@ -59,11 +60,11 @@
   <script type="module" src="./src/my-card.js"></script>
   <script>
 
-    // Card Duplication (does not work correctly, copies default card, but not any changes)
+    // Card Duplication (does not work correctly, does not copy changes)
 document.querySelector('#copy').addEventListener("click", (e) => {
-  if (document.querySelectorAll('#card').length < 10) {
-      const node = document.querySelector('.wrapper #card .modify-card').shadowRoot.querySelector('.whole-card').cloneNode(true);
-      document.querySelector('.wrapper').appendChild(node);
+  if (document.querySelectorAll('my-card').length < 10) {
+      const node = document.querySelector('my-card').cloneNode(true);
+      document.querySelector('.wrapper #card').appendChild(node);
   }
 })
 

@@ -69,7 +69,6 @@ export class MyCard extends LitElement {
         margin: 5px;
       }
 
-
       div img {
         width: 200px;
       }
