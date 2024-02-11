@@ -106,8 +106,8 @@ document.querySelector('#change-image').addEventListener('click', (e) => {
 
 // Change Background Color
 document.querySelector('#change-background').addEventListener('click', (e) => {
-  if (document.querySelector('my-card').shadowRoot.querySelector('.whole-card').classList.contains('change-color')) {
-    document.querySelector('.modify').classList.remove('change-color')
+  if (document.querySelector('.modify-card').shadowRoot.querySelector('.whole-card').classList.contains('change-color')) {
+    document.querySelector('.modify-card').classList.remove('change-color')
   } else {
     document.querySelector('my-card').shadowRoot.querySelector('.whole-card').classList.add('change-color')
     document.querySelector('my-card').shadowRoot.querySelector('.whole-card details').classList.add('change-color')
@@ -118,8 +118,11 @@ document.querySelector('#change-background').addEventListener('click', (e) => {
 
 // Delete Card (Needs fixing)
 document.querySelector('#delete').addEventListener('click', (e) => {
-  if (document.querySelectorAll('#card').length !== 1) {
-    document.querySelector('.modify-card').remove();
+  const myCards = document.querySelectorAll('my-card');
+  const cardDelete = myCards[myCards.length - 1];
+  
+  if (document.querySelectorAll('my-card').length !== 1) {
+    cardDelete.remove();
   }
 })
   </script>
