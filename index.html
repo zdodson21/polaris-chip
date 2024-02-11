@@ -107,7 +107,9 @@ document.querySelector('#change-image').addEventListener('click', (e) => {
 // Change Background Color
 document.querySelector('#change-background').addEventListener('click', (e) => {
   if (document.querySelector('.modify-card').shadowRoot.querySelector('.whole-card').classList.contains('change-color')) {
-    document.querySelector('.modify-card').classList.remove('change-color')
+    document.querySelector('.modify-card').shadowRoot.querySelector('.whole-card').classList.remove('change-color');
+    document.querySelector('.modify-card').shadowRoot.querySelector('.whole-card details').classList.remove('change-color');
+    document.querySelector('.modify-card').shadowRoot.querySelector('.whole-card details div').classList.remove('change-color');
   } else {
     document.querySelector('my-card').shadowRoot.querySelector('.whole-card').classList.add('change-color')
     document.querySelector('my-card').shadowRoot.querySelector('.whole-card details').classList.add('change-color')
