@@ -60,7 +60,7 @@
   <script type="module" src="./src/my-card.js"></script>
   <script>
 
-    // Card Duplication (does not work correctly, does not copy changes)
+    // Card Duplication
 document.querySelector('#copy').addEventListener("click", (e) => {
   if (document.querySelectorAll('my-card').length < 10) {
       const node = document.querySelector('my-card').cloneNode(true);
@@ -75,14 +75,14 @@ document.querySelector('#change-title').addEventListener("click", (e) => {
   console.log('Change Title Button Pressed')
   if (titleChanged === false) {
     console.log('If acknowledged...')
-    const titleChange = document.querySelector('my-card').shadowRoot.querySelector('.card-header').innerText = 'WOW A NEW TITLE!!!';
+    const titleChange = document.querySelector('my-card').setAttribute('header', 'WOW A NEW TITLE!')//.shadowRoot.querySelector('.card-header').innerText = 'WOW A NEW TITLE!!!';
     console.log('Title changed...')
     const buttonChange = document.querySelector('#change-title').innerText = 'Change Title Back';
     console.log('button changed...')
     titleChanged = true;
     console.log('done')
   } else {
-    const titleChange = document.querySelector('my-card').shadowRoot.querySelector('.card-header').innerText = 'AMAZING EPIC CARD!!!';
+    const titleChange = document.querySelector('my-card').setAttribute('header', 'AMAZING EPIC CARD!!!')//.shadowRoot.querySelector('.card-header').innerText = 'AMAZING EPIC CARD!!!';
     const buttonChange = document.querySelector('#change-title').innerText = 'Change Title';
     titleChanged = false;
     console.log('Title changed back')
@@ -94,11 +94,11 @@ let imageChanged = false;
 
 document.querySelector('#change-image').addEventListener('click', (e) => {
   if (imageChanged === false) {
-    const imgChange = document.querySelector('my-card').shadowRoot.querySelector('img').src = "https://i.redd.it/32vqf2dfl5a11.jpg";
+    const imgChange = document.querySelector('my-card').setAttribute('meme', 'https://i.redd.it/32vqf2dfl5a11.jpg')//.shadowRoot.querySelector('img').src = "https://i.redd.it/32vqf2dfl5a11.jpg";
     const buttonChange = document.querySelector('#change-image').innerText = 'Change Image Back'
     imageChanged = true;
   } else {
-    const imgChange = document.querySelector('my-card').shadowRoot.querySelector('img').src = "https://media2.giphy.com/media/yYSSBtDgbbRzq/giphy.gif?cid=ecf05e474unthi9kin9jwi2th7oyx4vuy30igipopfic1v8n&ep=v1_gifs_search&rid=giphy.gif&ct=g";
+    const imgChange = document.querySelector('my-card').setAttribute('meme', 'https://media2.giphy.com/media/yYSSBtDgbbRzq/giphy.gif?cid=ecf05e474unthi9kin9jwi2th7oyx4vuy30igipopfic1v8n&ep=v1_gifs_search&rid=giphy.gif&ct=g')//.shadowRoot.querySelector('img').src = "https://media2.giphy.com/media/yYSSBtDgbbRzq/giphy.gif?cid=ecf05e474unthi9kin9jwi2th7oyx4vuy30igipopfic1v8n&ep=v1_gifs_search&rid=giphy.gif&ct=g";
     const buttonChange = document.querySelector('#change-image').innerText = 'Change Image'
     imageChanged = false;
   }
