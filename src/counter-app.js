@@ -8,7 +8,7 @@ export class CounterApp extends LitElement {
 
     constructor() {
         super();
-        this.counter = 16;
+        this.counter = 15;
         this.min = 10;
         this.max = 25;
     }
@@ -19,7 +19,7 @@ export class CounterApp extends LitElement {
                 display: block;
             }
 
-            
+
         `;
     }
 
