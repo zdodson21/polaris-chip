@@ -7,21 +7,34 @@ export class CounterApp extends LitElement {
     }
 
     constructor() {
-
+        super();
+        this.counter = 16;
+        this.min = 10;
+        this.max = 25;
     }
 
     static get styles() {
         return css`
+            :host {
+                display: block;
+            }
 
+            
         `;
     }
 
     render() {
-        return html ``;
+        return html `
+
+        `;
     }
 
     static get properties() {
-            
+        return {
+            counter: { type: int },
+            min: { type: int},
+            max: { type: int},
+        };
     }
 }
 
