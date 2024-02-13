@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import "@lrnwebcomponents/meme-maker/meme-maker.js";
 
 /**
  * Now it's your turn. Here's what we need to try and do
@@ -94,7 +95,8 @@ export class MyCard extends LitElement {
       <div class='whole-card'>
         <h1 class="card-header">${this.header}</h1>  
         <p>${this.text}</p>  
-        <img src="${this.meme}" alt="This is a meme"> <br> 
+        <meme-maker></meme-maker>
+         <br> 
         <a href="${this.buttonLink}" target="_blank" rel="noopener noreferrer">
           <button>${this.buttonText}</button>
         </a>
