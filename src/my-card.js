@@ -95,7 +95,7 @@ export class MyCard extends LitElement {
       <div class='whole-card'>
         <h1 class="card-header">${this.header}</h1>  
         <p>${this.text}</p>  
-        <meme-maker alt="Cat stalking a small toy" image-url="https://cdn2.thecatapi.com/images/9j5.jpg" top-text="I bring you" bottom-text="the death"></meme-maker>
+        <meme-maker alt="Cat stalking a small toy" image-url='${this.meme}' top-text="I bring you" bottom-text="the death"></meme-maker>
          <br> 
         <a href="${this.buttonLink}" target="_blank" rel="noopener noreferrer">
           <button>${this.buttonText}</button>
