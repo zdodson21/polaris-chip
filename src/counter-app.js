@@ -25,7 +25,8 @@ export class CounterApp extends LitElement {
 
     render() {
         return html `
-
+            <h1>Counter</h1>
+            <p>${this.counter}</p>
         `;
     }
 
