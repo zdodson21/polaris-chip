@@ -55,79 +55,85 @@
       <my-card header="My pinterest feed is a lot of cursed memes my friend and I send each other" text="says alot huh?" meme="https://i.pinimg.com/564x/8b/6a/32/8b6a327bac0f293f169442da15dadc6b.jpg" button-text="im out of ideas here. here's the patch notes for the Sims 3" button-link="https://www.youtube.com/watch?v=4nxsCZ2SEcQ&list=PLLRLe7QVUBaFbWH9EuwchrSYWpUAEAksb&index=1"></my-card>
     </div>
   </div>
+
+  <h1 style="text-decoration: underline;">Counters</h1>
+  <div class="counters">
+    <counter-app></counter-app>
+  </div>
+
   <!-- this is what is bringing in the definition for this tag -->
   <script type="module" src="./src/polaris-chip.js"></script>
   <script type="module" src="./src/my-card.js"></script>
   <script type="module" src="./src/counter-app.js"></script>
-  <script>
-
-    // Card Duplication
-document.querySelector('#copy').addEventListener("click", (e) => {
-  if (document.querySelectorAll('my-card').length < 10) {
-      const node = document.querySelector('my-card').cloneNode(true);
-      document.querySelector('.wrapper #card').appendChild(node);
-  }
-})
-
-// Title Changing
-let titleChanged = false;
-
-document.querySelector('#change-title').addEventListener("click", (e) => {
-  console.log('Change Title Button Pressed')
-  if (titleChanged === false) {
-    console.log('If acknowledged...')
-    const titleChange = document.querySelector('my-card').setAttribute('header', 'WOW A NEW TITLE!')//.shadowRoot.querySelector('.card-header').innerText = 'WOW A NEW TITLE!!!';
-    console.log('Title changed...')
-    const buttonChange = document.querySelector('#change-title').innerText = 'Change Title Back';
-    console.log('button changed...')
-    titleChanged = true;
-    console.log('done')
-  } else {
-    const titleChange = document.querySelector('my-card').setAttribute('header', 'AMAZING EPIC CARD!!!')//.shadowRoot.querySelector('.card-header').innerText = 'AMAZING EPIC CARD!!!';
-    const buttonChange = document.querySelector('#change-title').innerText = 'Change Title';
-    titleChanged = false;
-    console.log('Title changed back')
-  }
-})
-
-// Image Changing
-let imageChanged = false;
-
-document.querySelector('#change-image').addEventListener('click', (e) => {
-  if (imageChanged === false) {
-    const imgChange = document.querySelector('my-card').setAttribute('meme', 'https://i.redd.it/32vqf2dfl5a11.jpg')//.shadowRoot.querySelector('img').src = "https://i.redd.it/32vqf2dfl5a11.jpg";
-    const buttonChange = document.querySelector('#change-image').innerText = 'Change Image Back'
-    imageChanged = true;
-  } else {
-    const imgChange = document.querySelector('my-card').setAttribute('meme', 'https://media2.giphy.com/media/yYSSBtDgbbRzq/giphy.gif?cid=ecf05e474unthi9kin9jwi2th7oyx4vuy30igipopfic1v8n&ep=v1_gifs_search&rid=giphy.gif&ct=g')//.shadowRoot.querySelector('img').src = "https://media2.giphy.com/media/yYSSBtDgbbRzq/giphy.gif?cid=ecf05e474unthi9kin9jwi2th7oyx4vuy30igipopfic1v8n&ep=v1_gifs_search&rid=giphy.gif&ct=g";
-    const buttonChange = document.querySelector('#change-image').innerText = 'Change Image'
-    imageChanged = false;
-  }
-})
-
-// Change Background Color
-document.querySelector('#change-background').addEventListener('click', (e) => {
-  if (document.querySelector('.modify-card').shadowRoot.querySelector('.whole-card').classList.contains('change-color')) {
-    document.querySelector('.modify-card').shadowRoot.querySelector('.whole-card').classList.remove('change-color');
-    document.querySelector('.modify-card').shadowRoot.querySelector('.whole-card details').classList.remove('change-color');
-    document.querySelector('.modify-card').shadowRoot.querySelector('.whole-card details div').classList.remove('change-color');
-  } else {
-    document.querySelector('my-card').shadowRoot.querySelector('.whole-card').classList.add('change-color')
-    document.querySelector('my-card').shadowRoot.querySelector('.whole-card details').classList.add('change-color')
-    document.querySelector('my-card').shadowRoot.querySelector('.whole-card details div').classList.add('change-color')
-  }
-
-})
-
-// Delete Card (Needs fixing)
-document.querySelector('#delete').addEventListener('click', (e) => {
-  const myCards = document.querySelectorAll('my-card');
-  const cardDelete = myCards[myCards.length - 1];
   
-  if (document.querySelectorAll('my-card').length !== 1) {
-    cardDelete.remove();
-  }
-})
+  <script>
+    // Card Duplication
+    document.querySelector('#copy').addEventListener("click", (e) => {
+      if (document.querySelectorAll('my-card').length < 10) {
+          const node = document.querySelector('my-card').cloneNode(true);
+          document.querySelector('.wrapper #card').appendChild(node);
+      }
+    })
+
+    // Title Changing
+    let titleChanged = false;
+
+    document.querySelector('#change-title').addEventListener("click", (e) => {
+      console.log('Change Title Button Pressed')
+      if (titleChanged === false) {
+        console.log('If acknowledged...')
+        const titleChange = document.querySelector('my-card').setAttribute('header', 'WOW A NEW TITLE!')//.shadowRoot.querySelector('.card-header').innerText = 'WOW A NEW TITLE!!!';
+        console.log('Title changed...')
+        const buttonChange = document.querySelector('#change-title').innerText = 'Change Title Back';
+        console.log('button changed...')
+        titleChanged = true;
+        console.log('done')
+      } else {
+        const titleChange = document.querySelector('my-card').setAttribute('header', 'AMAZING EPIC CARD!!!')//.shadowRoot.querySelector('.card-header').innerText = 'AMAZING EPIC CARD!!!';
+        const buttonChange = document.querySelector('#change-title').innerText = 'Change Title';
+        titleChanged = false;
+        console.log('Title changed back')
+      }
+    })
+
+    // Image Changing
+    let imageChanged = false;
+
+    document.querySelector('#change-image').addEventListener('click', (e) => {
+      if (imageChanged === false) {
+        const imgChange = document.querySelector('my-card').setAttribute('meme', 'https://i.redd.it/32vqf2dfl5a11.jpg')//.shadowRoot.querySelector('img').src = "https://i.redd.it/32vqf2dfl5a11.jpg";
+        const buttonChange = document.querySelector('#change-image').innerText = 'Change Image Back'
+        imageChanged = true;
+      } else {
+        const imgChange = document.querySelector('my-card').setAttribute('meme', 'https://media2.giphy.com/media/yYSSBtDgbbRzq/giphy.gif?cid=ecf05e474unthi9kin9jwi2th7oyx4vuy30igipopfic1v8n&ep=v1_gifs_search&rid=giphy.gif&ct=g')//.shadowRoot.querySelector('img').src = "https://media2.giphy.com/media/yYSSBtDgbbRzq/giphy.gif?cid=ecf05e474unthi9kin9jwi2th7oyx4vuy30igipopfic1v8n&ep=v1_gifs_search&rid=giphy.gif&ct=g";
+        const buttonChange = document.querySelector('#change-image').innerText = 'Change Image'
+        imageChanged = false;
+      }
+    })
+
+    // Change Background Color
+    document.querySelector('#change-background').addEventListener('click', (e) => {
+      if (document.querySelector('.modify-card').shadowRoot.querySelector('.whole-card').classList.contains('change-color')) {
+        document.querySelector('.modify-card').shadowRoot.querySelector('.whole-card').classList.remove('change-color');
+        document.querySelector('.modify-card').shadowRoot.querySelector('.whole-card details').classList.remove('change-color');
+        document.querySelector('.modify-card').shadowRoot.querySelector('.whole-card details div').classList.remove('change-color');
+      } else {
+        document.querySelector('my-card').shadowRoot.querySelector('.whole-card').classList.add('change-color')
+        document.querySelector('my-card').shadowRoot.querySelector('.whole-card details').classList.add('change-color')
+        document.querySelector('my-card').shadowRoot.querySelector('.whole-card details div').classList.add('change-color')
+      }
+
+    })
+
+    // Delete Card (Needs fixing)
+    document.querySelector('#delete').addEventListener('click', (e) => {
+      const myCards = document.querySelectorAll('my-card');
+      const cardDelete = myCards[myCards.length - 1];
+      
+      if (document.querySelectorAll('my-card').length !== 1) {
+        cardDelete.remove();
+      }
+    })
   </script>
 </body>
 
