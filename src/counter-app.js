@@ -46,20 +46,20 @@ export class CounterApp extends LitElement {
 
             /* When we hit 18 the on the counter the color should change */
             .change-18 {
-                background-color: blue;
+                color: blue;
             }
             
             
 
             /* When we hit 21 on the counter, the color of the number should change */
             .change-21 {
-                background-color: green;
+                color: green;
             }
 
 
             /* When we hit min or max the color fo the number should change */
             .change-min-max {
-                background-color: red;
+                color: red;
             }
 
 
@@ -103,18 +103,18 @@ export class CounterApp extends LitElement {
 
         if (this.counter === 18) {
             console.log('Card 18')
-            cardAttribute.shadowRoot.querySelector('confetti-container').classList.add('change-18');
+            cardAttribute.shadowRoot.querySelector('confetti-container p ').classList.add('change-18');
         } 
         else if (this.counter === 21) {
-            cardAttribute.shadowRoot.querySelector('confetti-container').classList.add('change-21');
+            cardAttribute.shadowRoot.querySelector('confetti-container p ').classList.add('change-21');
         } 
         else if (this.counter === this.max || this.counter === this.min) {
-            cardAttribute.shadowRoot.querySelector('confetti-container').classList.add('change-min-max');
+            cardAttribute.shadowRoot.querySelector('confetti-container p ').classList.add('change-min-max');
         }
         else {
-            cardAttribute.shadowRoot.querySelector('confetti-container').classList.remove('change-18');
-            cardAttribute.shadowRoot.querySelector('confetti-container').classList.remove('change-21');
-            cardAttribute.shadowRoot.querySelector('confetti-container').classList.remove('change-min-max');
+            cardAttribute.shadowRoot.querySelector('confetti-container p ').classList.remove('change-18');
+            cardAttribute.shadowRoot.querySelector('confetti-container p ').classList.remove('change-21');
+            cardAttribute.shadowRoot.querySelector('confetti-container p ').classList.remove('change-min-max');
         }
     }
 
