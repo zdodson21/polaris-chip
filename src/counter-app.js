@@ -43,10 +43,25 @@ export class CounterApp extends LitElement {
             <h2 style='text-align: center; font-size: 60px;'>Counter</h2>
             <p style='text-align: center; font-size: 48px;'>${this.counter}</p>
             <div class='buttons'>
-                <button class='btn' id='minus' style='margin-right: 15px;'>-</button> 
-                <button class='btn' id='plus' style='margin-left: 15px;'>+</button>
+                <button @click=${this.minusButton} class='btn' id='minus' style='margin-right: 15px;' ?disabled="${this.min === this.counter}">-</button> 
+                <button @click=${this.plusButton} class='btn' id='plus' style='margin-left: 15px;' ?disabled="${this.max === this.counter}">+</button>
             </div>
         `;
+    }
+
+    minusButton() {
+        console.log('minus pressed. counter = ' + this.counter);
+        if (this.counter > this.min) {
+            this.counter--;
+        }
+        
+    }
+
+    plusButton() {
+        console.log('plus pressed. counter = ' + this.counter);
+        if (this.counter < this.max) {
+            this.counter++;
+        }
     }
 
     static get properties() {
@@ -62,6 +77,6 @@ globalThis.customElements.define(CounterApp.tag, CounterApp);
 
 // button logic???
 
-document.querySelector('#minus').addEventListener('click', (e) => {
-    console.log('minus pressed');
-})
+// document.querySelector('#minus').addEventListener('click', (e) => {
+//     console.log('minus pressed');
+// })
