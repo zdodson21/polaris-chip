@@ -14,9 +14,12 @@ export class CounterApp extends LitElement {
         this.max = 25;
     }
 
+    
+
     static get styles() {
         return css`            
-            :host {
+
+            confetti-container {
                 display: block;
                 width: 400px;
                 background-color: #121212;
@@ -49,11 +52,15 @@ export class CounterApp extends LitElement {
             
 
             /* When we hit 21 on the counter, the color of the number should change */
-
+            .change-21 {
+                background-color: green;
+            }
 
 
             /* When we hit min or max the color fo the number should change */
-
+            .change-min-max {
+                background-color: red;
+            }
 
 
         `;
@@ -88,25 +95,26 @@ export class CounterApp extends LitElement {
         this.colorCheck(this.id)
     }
 
-    colorCheck() {        
-        // console.log('color checking...')
-        // this.updated(this.counter);
+    colorCheck() {   
+        const cardName = this.name;
+        const cardAttribute = document.querySelector("[name=" + CSS.escape(cardName) + "]")
+        
+        console.log(cardName); console.log(cardAttribute);
 
-        // Get the name attribute from the HTML tag, if it is equal to counterName, then proceed
-
-        const counterName = this.name;
-        const tagName = document.querySelector('counter-app').getAttribute('name'); // THIS IS THE PART TO FIGURE OUT!!!
-
-        console.log(counterName);
-        console.log(tagName);
-
-        if (this.counter === 18 && this.name === this.name) {
-            
-            
-        } else if (this.counter === 21) {
-            
-        } else if (this.counter === this.max || this.counter === this.min) {
-
+        if (this.counter === 18) {
+            console.log('Card 18')
+            cardAttribute.shadowRoot.querySelector('confetti-container').classList.add('change-18');
+        } 
+        else if (this.counter === 21) {
+            cardAttribute.shadowRoot.querySelector('confetti-container').classList.add('change-21');
+        } 
+        else if (this.counter === this.max || this.counter === this.min) {
+            cardAttribute.shadowRoot.querySelector('confetti-container').classList.add('change-min-max');
+        }
+        else {
+            cardAttribute.shadowRoot.querySelector('confetti-container').classList.remove('change-18');
+            cardAttribute.shadowRoot.querySelector('confetti-container').classList.remove('change-21');
+            cardAttribute.shadowRoot.querySelector('confetti-container').classList.remove('change-min-max');
         }
     }
 
