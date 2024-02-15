@@ -8,6 +8,7 @@ export class CounterApp extends LitElement {
 
     constructor() {
         super();
+        this.name = 'Counter App';
         this.counter = 15;
         this.min = 10;
         this.max = 25;
@@ -35,16 +36,33 @@ export class CounterApp extends LitElement {
                 height: 60px;
                 margin-bottom: 15px;
             }
+
+            .btn:hover, .btn:focus {
+                background-color: yellow;
+            }
+
+            /* When we hit 18 the on the counter the color should change */
+
+            
+
+            /* When we hit 21 on the counter, the color of the number should change */
+
+
+
+            /* When we hit min or max the color fo the number should change */
+
+
+
         `;
     }
 
     render() {
         return html `
-            <h2 style='text-align: center; font-size: 60px;'>Counter</h2>
-            <p style='text-align: center; font-size: 48px;'>${this.counter}</p>
+            <h2 style='text-align: center; font-size: 72px;'>${this.name}</h2>
+            <p style='text-align: center; font-size: 60px;'>${this.counter}</p>
             <div class='buttons'>
-                <button @click=${this.minusButton} class='btn' id='minus' style='margin-right: 15px;' ?disabled="${this.min === this.counter}">-</button> 
-                <button @click=${this.plusButton} class='btn' id='plus' style='margin-left: 15px;' ?disabled="${this.max === this.counter}">+</button>
+                <button @click=${this.minusButton} class='btn' id='minus' style='margin-right: 16px;' ?disabled="${this.min === this.counter}">-</button> 
+                <button @click=${this.plusButton} class='btn' id='plus' style='margin-left: 16px;' ?disabled="${this.max === this.counter}">+</button>
             </div>
         `;
     }
@@ -66,6 +84,7 @@ export class CounterApp extends LitElement {
 
     static get properties() {
         return {
+            name: { type: String },
             counter: { type: Number },
             min: { type: Number },
             max: { type: Number },

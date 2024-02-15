@@ -58,7 +58,8 @@
 
   <h1 style="text-decoration: underline;">Counters</h1>
   <div class="counters">
-    <counter-app></counter-app>
+    <counter-app name="Counter 1"></counter-app>
+    <counter-app name="Counter 2" counter="12" min="0" max="28"></counter-app>
   </div>
 
   <!-- this is what is bringing in the definition for this tag -->
@@ -135,12 +136,6 @@
       }
     })
   </script>
-
-  <!-- <script class="counter-script">
-      document.querySelector('counter-app').shadowRoot.querySelector('#minus').addEventListener('click', (e) => {
-        console.log('minus button pressed')
-      })
-  </script> -->
 
 </body>
 
