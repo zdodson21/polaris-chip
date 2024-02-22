@@ -28,6 +28,8 @@
 </head>
 
 <body>
+  <warning-notification date="Sample Date"></warning-notification>
+  
   <h1>polaris-chip</h1>
   <!-- this is going to do whatever the tag's defaults are -->
   <polaris-chip title="News of Record" link="https://psu.edu"></polaris-chip>
@@ -62,10 +64,16 @@
     <counter-app name="Counter 2" counter="12" min="0" max="28"></counter-app>
   </div>
 
+  <h1 style="text-decoration: underline">Warning Notifications</h1>
+  <warning-notification date="Sample Date" notice="true" style="margin-bottom: 10px;"></warning-notification>
+  <warning-notification date="Sample Date" warning="true"></warning-notification>
+  <warning-notification date="Sample Date" alert="true"></warning-notification>
+
   <!-- this is what is bringing in the definition for this tag -->
   <script type="module" src="./src/polaris-chip.js"></script>
   <script type="module" src="./src/my-card.js"></script>
   <script type="module" src="./src/counter-app.js"></script>
+  <script type="module" src="./src/warning-notification.js"></script>
   
   <script class="card-script">
     // Card Duplication
