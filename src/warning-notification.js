@@ -28,9 +28,10 @@ export class WarningNotification extends LitElement {
         return css`
             .notification-box {
                 display: inline-flex;
-                width: 106%; /* ??? */
+                width: 100%; /* ??? */
                 margin: 0px;
                 padding: 0px;
+                border-style: solid;
             }
             
             .left, .right { /* Will end up removing */
