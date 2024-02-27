@@ -58,7 +58,8 @@ export class WarningNotification extends LitElement {
 
             :host([scrolls]) {
                 position: fixed;
-                display: inline-flex;
+                display: sticky;
+                z-index: 100;
                 width: 100%;
                 top: 0;
             }
