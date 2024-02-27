@@ -28,7 +28,7 @@
 </head>
 
 <body>
-  <warning-notification date="Sample Date"></warning-notification>
+  <warning-notification scrolls="true"></warning-notification>
   
   <h1>polaris-chip</h1>
   <!-- this is going to do whatever the tag's defaults are -->
@@ -65,9 +65,9 @@
   </div>
 
   <h1 style="text-decoration: underline">Warning Notifications</h1>
-  <warning-notification date="February 6 2024" notice="true" text="Notice"></warning-notification>
-  <warning-notification date="March 14 2024" warning="true" text="Warning"></warning-notification>
-  <warning-notification date="April 1 2024" alert="true" text="Alert!"></warning-notification>
+  <warning-notification date="February 6, 2024" status="notice" text="There is a cat in front of Westgate building. Please go pet the cat."></warning-notification>
+  <warning-notification date="March 14, 2024" status="warning" text='There is a bear wandering on campus. Please do not "go pet that dawg", but honestly we can&#39t stop you.'></warning-notification>
+  <warning-notification date="April 1, 2024" status="alert" text="Literally aliens"></warning-notification>
 
   <!-- this is what is bringing in the definition for this tag -->
   <script type="module" src="./src/polaris-chip.js"></script>
@@ -75,6 +75,7 @@
   <script type="module" src="./src/counter-app.js"></script>
   <script type="module" src="./src/warning-notification.js"></script>
   
+
   <script class="card-script">
     // Card Duplication
     document.querySelector('#copy').addEventListener("click", (e) => {

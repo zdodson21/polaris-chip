@@ -8,24 +8,61 @@ export class WarningNotification extends LitElement {
 
     constructor() {
         super();
-        this.topic = '#' // used to determine which card is being called
         this.date = '#';
         this.text ='#'; // don't know if need this or can implement some other way
-        this.notice = true; //want to make it so user will set this value to true or false in HTML for notice, warning, and alert. need to figure out code
-        /* 
-        Side Color = 
-        */
-        this.warning = false;
-        /*
-            Side Color = background-color: #bf8226; color: #ffffff;
-            Middle Color = background-color: #ffd100; color: #000321;
-        */
-        this.alert = false;
-        
+        this.status = '#';
+        this.open = true;
+        this.scrolls = false;
     }
 
     static get styles() {
         return css`
+            
+            /* Generic */
+            :host .left, :host .right {
+                background-color: burlywood;
+            }
+            
+            :host .middle {
+                background-color: green;
+            }
+            
+            /* Notices */
+            :host([status="notice"]) .left, :host([status="notice"]) .right{
+                background-color: #cfeceb;
+            }
+            
+            :host([status="notice"]) .middle {
+                background-color: #ffffff;
+                color: black;
+            }
+
+            /* Warnings */
+            :host([status="warning"]) .left, :host([status="warning"]) .right {
+                background-color: #bf8226;
+            }
+            
+            :host([status='warning']) .middle {
+                background-color: #ffd100;
+            }
+
+            /* Alerts */
+            :host([status='alert']) .left, :host([status='alert']) .right {
+                background-color: #e7a23c;
+            }
+            
+            :host([status='alert']) .middle {
+                background-color: #e74c3c;
+                color: white;
+            }
+
+            :host([scrolls]) {
+                position: fixed;
+                display: inline-flex;
+                width: 100%;
+                top: 0;
+            }
+            
             .notification-box {
                 display: inline-flex;
                 width: 100%; /* ??? */
@@ -33,17 +70,23 @@ export class WarningNotification extends LitElement {
                 padding: 0px;
                 border-style: solid;
             }
+
+            .left, .middle, .right {
+                padding: 5px;
+            }
             
-            .left, .right { /* Will end up removing */
-                background-color: #bf8226;
-                width: 25%;
-                color: #ffffff;
+            .left, .right {
+                display: flex;
+                align-items: center;
+                width: 25%
             }
 
             .middle {
-                background-color: #ffd100;
                 width: 50%;
-                color: #000321;
+            }
+
+            .notice-middle {
+                background-color: blue;
             }
         `
     }
@@ -55,38 +98,23 @@ export class WarningNotification extends LitElement {
                     <h1>${this.date}</h1>
                 </div>
                 <div class="middle"> 
-                    <p>${this.text}</p>
+                    <h4>${this.text}</h4>
                 </div>    
                 <div class="right">
-                    <p>Close Warning</p>
+                    <button id=close-btn>Close Notification</button>
                 </div>
             </div>
         `
     }
-
-    warningColor() { // I don't think this will work since I won't have a button to call it
-        const warningSelector = document.querySelector('[name=' + CSS.escape(this.topic) + ']').shadowRoot.querySelector('.notification-box')
-        
-        if (this.notice) {
-            warningSelector.classList.add('notice')
-        }
-        else if (this.warning) {
-
-        }
-        else if (this.warning) {
-
-        }
-
-    }
+    
 
     static get properties() {
         return {
-            topic: {type: String},
             date: { type: String},
             text: { type: String},
-            notice: { type: Boolean },
-            warning: { type: Boolean},
-            alert: { type: Boolean},
+            status: { type: String },
+            open: { type: Boolean },
+            sticky: {type: Boolean},
         };
     }
 }
