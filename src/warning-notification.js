@@ -75,7 +75,7 @@ export class WarningNotification extends LitElement {
                 padding: 5px;
             }
             
-            .left, .right {
+            .left, .right { 
                 display: flex;
                 align-items: center;
                 width: 25%
@@ -83,10 +83,6 @@ export class WarningNotification extends LitElement {
 
             .middle {
                 width: 50%;
-            }
-
-            .notice-middle {
-                background-color: blue;
             }
         `
     }
@@ -101,12 +97,15 @@ export class WarningNotification extends LitElement {
                     <h4>${this.text}</h4>
                 </div>    
                 <div class="right">
-                    <button id=close-btn>Close Notification</button>
+                    <button id=close-btn @click=${this.openClose}>Close Notification</button>
                 </div>
             </div>
         `
     }
     
+    openClose() {
+        
+    }
 
     static get properties() {
         return {
