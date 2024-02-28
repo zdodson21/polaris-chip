@@ -11,7 +11,7 @@ export class WarningNotification extends LitElement {
         this.date = '#';
         this.text ='#'; // don't know if need this or can implement some other way
         this.status = '#';
-        this.open = true;
+        this.open = true; // USE THIS FOR OPENNING AND CLOSING CARDS
         this.scrolls = false;
     }
 
@@ -55,6 +55,14 @@ export class WarningNotification extends LitElement {
                 background-color: #e74c3c;
                 color: white;
             }
+
+            /* Opening and Closing */
+
+            :host([open = false]) .left, :host([open = false]) .middle {
+                display: none; /* Might have to switch */
+            }
+
+            /* All the rest of the stuff */
 
             :host([scrolls]) {
                 position: fixed;
@@ -105,7 +113,7 @@ export class WarningNotification extends LitElement {
     }
     
     openClose() {
-        
+        this.open = !this.open;
     }
 
     static get properties() {
