@@ -9,9 +9,10 @@ export class WarningNotification extends LitElement {
     constructor() {
         super();
         this.date = '#';
-        this.text ='#'; // don't know if need this or can implement some other way
+        this.title = '#'
+        this.text ='#';
         this.status = '#';
-        this.open = true; // USE THIS FOR OPENNING AND CLOSING CARDS
+        this.open = true; // USE THIS FOR OPENING AND CLOSING CARDS
         this.scrolls = false;
     }
 
@@ -58,8 +59,8 @@ export class WarningNotification extends LitElement {
 
             /* Opening and Closing */
 
-            :host([open = false]) .left, :host([open = false]) .middle {
-                display: none; /* Might have to switch */
+            :host([open=false]) .hideable {
+                display: none;
             }
 
             /* All the rest of the stuff */
@@ -100,25 +101,29 @@ export class WarningNotification extends LitElement {
         return html `
             <div class='notification-box'>
                 <div class='left' style='width: 20%'>
-                    <h1>${this.date}</h1>
+                    <h1 class="hideable">${this.date}</h1>
                 </div>
                 <div class="middle"> 
-                    <h4>${this.text}</h4>
+                    <h2>${this.title}</h2>
+                    <h4 class="hideable">${this.text}</h4>
                 </div>    
                 <div class="right">
-                    <button id=close-btn @click=${this.openClose}>Close Notification</button>
+                    <button id=close-btn @click=${this.openClose}>Open / Close Notification</button>
                 </div>
             </div>
         `
     }
     
     openClose() {
+        console.log('current state: ' + this.open)
         this.open = !this.open;
+        console.log(this.open)
     }
 
     static get properties() {
         return {
             date: { type: String},
+            title: { type: String},
             text: { type: String},
             status: { type: String },
             open: { type: Boolean },
