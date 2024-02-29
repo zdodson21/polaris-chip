@@ -12,24 +12,18 @@ export class WarningNotification extends LitElement {
         this.title = '#'
         this.text ='#';
         this.status = '#';
-        this.open = true; // USE THIS FOR OPENING AND CLOSING CARDS
+        this.open = true; // USE THIS FOR OPENING AND CLOSING CARDS... maybe
         this.scrolls = false;
+
+        // local storage in here
+
     }
 
     static get styles() {
         return css`
-            
-            /* Generic */
-            :host .left, :host .right {
-                background-color: burlywood;
-            }
-            
-            :host .middle {
-                background-color: green;
-            }
-            
+
             /* Notices */
-            :host([status="notice"]) .left, :host([status="notice"]) .right{
+            :host([status="notice"]) .left, :host([status="notice"]) .right, :host([status="notice"]) .notification-box{
                 background-color: #cfeceb;
             }
             
@@ -39,7 +33,7 @@ export class WarningNotification extends LitElement {
             }
 
             /* Warnings */
-            :host([status="warning"]) .left, :host([status="warning"]) .right {
+            :host([status="warning"]) .left, :host([status="warning"]) .right, :host([status="warning"]) .notification-box{
                 background-color: #bf8226;
             }
             
@@ -48,19 +42,13 @@ export class WarningNotification extends LitElement {
             }
 
             /* Alerts */
-            :host([status='alert']) .left, :host([status='alert']) .right {
-                background-color: #e7a23c;
+            :host([status='alert']) .left, :host([status='alert']) .right, :host([status='alert']) .notification-box{
+                background-color: #3498DB;
             }
             
             :host([status='alert']) .middle {
                 background-color: #e74c3c;
                 color: white;
-            }
-
-            /* Opening and Closing */
-
-            :host([open=false]) .hideable {
-                display: none;
             }
 
             /* All the rest of the stuff */
@@ -83,6 +71,11 @@ export class WarningNotification extends LitElement {
 
             .left, .middle, .right {
                 padding: 5px;
+                 // change so background is it's own thing, then middle is it's own thing and becomes skewed
+            }
+
+            .unskew {
+                transform: skew(-20deg);
             }
             
             .left, .right { 
@@ -93,6 +86,8 @@ export class WarningNotification extends LitElement {
 
             .middle {
                 width: 50%;
+                padding: 16px;
+                transform: skew(20deg);
             }
         `
     }
@@ -104,8 +99,8 @@ export class WarningNotification extends LitElement {
                     <h1 class="hideable">${this.date}</h1>
                 </div>
                 <div class="middle"> 
-                    <h2>${this.title}</h2>
-                    <h4 class="hideable">${this.text}</h4>
+                    <h2 class="unskew">${this.title}</h2>
+                    <slot><h4 class="hideable unskew">${this.text}</h4></slot>
                 </div>    
                 <div class="right">
                     <button id=close-btn @click=${this.openClose}>Open / Close Notification</button>
@@ -116,7 +111,7 @@ export class WarningNotification extends LitElement {
     
     openClose() {
         console.log('current state: ' + this.open)
-        this.open = !this.open;
+        this.open = !this.open
         console.log(this.open)
     }
 
