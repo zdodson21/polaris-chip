@@ -13,6 +13,9 @@ export class WarningNotification extends LitElement {
         this.text ='#';
         this.status = '#';
         this.open = true; // USE THIS FOR OPENING AND CLOSING CARDS... maybe
+            if (localStorage.getItem('warning-notification-status') == false) {
+                this.open = false;
+            }
         this.scrolls = false;
 
         // local storage in here
@@ -32,6 +35,13 @@ export class WarningNotification extends LitElement {
                 color: black;
             }
 
+                /* Closed */
+                :host([status="notice"]) .closed {
+                    background-color: #cfeceb;
+                    color: black;
+                    text-align: center;
+                }
+
             /* Warnings */
             :host([status="warning"]) .left, :host([status="warning"]) .right, :host([status="warning"]) .notification-box{
                 background-color: #bf8226;
@@ -40,6 +50,13 @@ export class WarningNotification extends LitElement {
             :host([status='warning']) .middle {
                 background-color: #ffd100;
             }
+
+                /* Closed */
+                :host([status='warning']) .closed {
+                    background-color: #ffd100;
+                    color: black;
+                    text-align: center;
+                }
 
             /* Alerts */
             :host([status='alert']) .left, :host([status='alert']) .right, :host([status='alert']) .notification-box{
@@ -50,6 +67,13 @@ export class WarningNotification extends LitElement {
                 background-color: #e74c3c;
                 color: white;
             }
+
+                /* Closed */
+                :host([status='alert']) .closed {
+                    background-color: #e74c3c;
+                    color: white;
+                    text-align: center;
+                }
 
             /* All the rest of the stuff */
 
@@ -89,10 +113,36 @@ export class WarningNotification extends LitElement {
                 padding: 16px;
                 transform: skew(20deg);
             }
+
+            .closed {
+                display: inline-flex;
+                width: 100%;
+                align-items: center;
+                justify-content: center;
+            }
+
+            button {
+                font-weight: bold;
+                background: none;
+                border: none;
+                height: 50px;
+            }
+
+            button:focus, button:hover {
+                text-decoration: underline; 
+            }
         `
     }
 
     render() {
+        if (!this.open) {
+            return this.closedView();
+        } else {
+            return this.openView();
+        }
+    }
+
+    openView() {
         return html `
             <div class='notification-box'>
                 <div class='left' style='width: 20%'>
@@ -103,16 +153,33 @@ export class WarningNotification extends LitElement {
                     <slot><h4 class="hideable unskew">${this.text}</h4></slot>
                 </div>    
                 <div class="right">
-                    <button id=close-btn @click=${this.openClose}>Open / Close Notification</button>
+                    <button id='close-btn' @click=${this.openClose}>X Close</button>
                 </div>
             </div>
         `
     }
+
+    closedView() {
+        return html `
+            <div class='closed'>
+                <h2>${this.title}</h2>
+                <button id='open-button' @click=${this.openClose}>&#92&#47</button>
+            </div>
+        `
+    }
     
+    // TODO Opening & closing design, local storage
+
     openClose() {
-        console.log('current state: ' + this.open)
+        // console.log('current state: ' + this.open)
         this.open = !this.open
-        console.log(this.open)
+        if (this.open === false) {
+            localStorage.setItem('warning-notification-status', false);
+        } else {
+            localStorage.setItem('warning-notification-status', true);
+        }
+        
+        // console.log(this.open)
     }
 
     static get properties() {
@@ -121,7 +188,7 @@ export class WarningNotification extends LitElement {
             title: { type: String},
             text: { type: String},
             status: { type: String },
-            open: { type: Boolean },
+            open: { type: Boolean, Reflect: true },
             sticky: {type: Boolean},
         };
     }
