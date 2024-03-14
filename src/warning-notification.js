@@ -12,10 +12,10 @@ export class WarningNotification extends LitElement {
         this.title = '#'
         this.text ='#';
         this.status = '#';
-        this.open = true; // USE THIS FOR OPENING AND CLOSING CARDS... maybe
-            if (localStorage.getItem('warning-notification-status') == false) {
-                this.open = false;
-            }
+        console.log(localStorage.getItem('status'))
+        this.opened = false;
+        // console.log(localStorage.getItem('status'))
+            
         this.scrolls = false;
 
         // local storage in here
@@ -135,10 +135,17 @@ export class WarningNotification extends LitElement {
     }
 
     render() {
-        if (!this.open) {
-            return this.closedView();
-        } else {
+        if (localStorage.getItem('status') == 'true') {
+            this.opened = true;
+            console.log ('localStorage is true')
+        } else if (localStorage.getItem('status') == 'false') { // site defaults to this for whatever reason, despite previous settings
+            this.opened = false; // USE THIS FOR OPENING AND CLOSING CARDS... maybe
+            console.log ('localStorage is false')
+        }
+        if (this.opened == true) {
             return this.openView();
+        } else {
+            return this.closedView();
         }
     }
 
@@ -172,13 +179,14 @@ export class WarningNotification extends LitElement {
 
     openClose() {
         // console.log('current state: ' + this.open)
-        this.open = !this.open
-        if (this.open === false) {
-            localStorage.setItem('warning-notification-status', false);
-        } else {
-            localStorage.setItem('warning-notification-status', true);
-        }
-        
+        this.opened = !this.opened
+        localStorage.setItem('status', this.opened);
+        console.log(localStorage.getItem('status'))
+        // if (this.opened === false) {
+        //     localStorage.setItem('warning-notification-status', false);
+        // } else if (this.opened === true) {
+        //     localStorage.setItem('warning-notification-status', true);
+        // }
         // console.log(this.open)
     }
 
@@ -188,7 +196,7 @@ export class WarningNotification extends LitElement {
             title: { type: String},
             text: { type: String},
             status: { type: String },
-            open: { type: Boolean, Reflect: true },
+            opened: { type: Boolean, Reflect: true },
             sticky: {type: Boolean},
         };
     }
