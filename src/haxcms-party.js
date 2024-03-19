@@ -12,19 +12,26 @@ export class HaxCMSParty extends DDD {
 
     constructor() {
         super();
+
     }
 
     static get styles() {
-        return css`
+        return [
+            super.styles,
+            css`
             
-        `
+            `
+        ]
     }
 
     render() {
         return html `
             <div class='add-members'>
-                <input type='text'></input>
-                <button id='add-user-btn'>Add User</button>
+                <h2>Add Members</h2>
+                <div class='add-input'>
+                    <input type='text'></input>
+                    <button id='add-user-btn'>Add User</button>
+                </div>
             </div>
             <div class='party-section'>
                 <h2>Your Current Party</h2>
@@ -43,7 +50,10 @@ export class HaxCMSParty extends DDD {
     }
 
     static get properties() {
-
+        return {
+            ...super.properties,
+            
+        }
     }
 }
 
