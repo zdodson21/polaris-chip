@@ -19,7 +19,7 @@ export class HaxCMSParty extends DDD {
         return [
             super.styles,
             css `
-
+                
             `
         ]
     }
@@ -38,7 +38,12 @@ export class HaxCMSParty extends DDD {
             <div class='party'>
                 <h2>Your Current Party</h2>
                 <div class='party-showcase'> <!-- This section will be a showcase of the 'party members', users can also remove party members -->
-
+                    <!-- 
+                    <div class='user-character'>
+                        <rpg-character></rpg-character>
+                        <button id='remove-character'></button>
+                    </div> 
+                    -->
                 </div>
             </div>
             <div class='confirmation-control'>
@@ -54,24 +59,55 @@ export class HaxCMSParty extends DDD {
             3. Create tag for new rpg-character, assign 'seed' attribute to the value of newPartyMember
             4. Add button (or image if I have it) that can be used to to remove party member (fades sprite (again, if possible))
         */
-        e.preventDefault();
-        console.log('Add User Pressed...');
+        
+        // console.log('Add User Pressed...');
+        e.preventDefault(); // prevents page refresh on form submission
+        
         const partyShowcaseSelector = document.querySelector('haxcms-party').shadowRoot.querySelector('.party .party-showcase');
-        let newMemberField = document.querySelector('haxcms-party').shadowRoot.querySelector('#add-user-text');
-        let memberName = newMemberField.value;
+        const newMemberField = document.querySelector('haxcms-party').shadowRoot.querySelector('#add-user-text');
+        const memberName = newMemberField.value;
 
         if (memberName === '') {
             alert('Please input a name for your new party member!')
         } else {
             // start process of adding character to party (instructions above)
             newMemberField.value = '';
-            console.log(memberName);
+            // console.log(memberName);
+
+            // creates character container
+            let member = document.createElement('div');
+            member.classList.add('user-character');
+            partyShowcaseSelector.appendChild(member);
+            
+            //creates character
+            let character = document.createElement('rpg-character');
+            character.setAttribute('seed', memberName)
+            member.appendChild(character)
+
+            //creates remove button
+            let button = document.createElement('button');
+            button.setAttribute('class', 'remove-character');
+            button.textContent = 'X';
+            button.setAttribute('onclick', 'parentNode.remove()')
+            member.appendChild(button)
+
+            //creates character name text
+            let text = document.createElement('p');
+            text.textContent = memberName;
+            member.appendChild(text)
         }
+    }
+
+    removeCharacter(member, character, button) {
+        member.remove()
+        character.remove()
+        button.remove();
     }
 
     saveParty() {
         console.log('Save pressed...')
-        // in this case, hopefully can get this to work with local storage
+        // in this case, hopefully can get this to work with local storage?
+        // in a real scenario, probably would save to a database
     }
 
     cancelChanges() {
