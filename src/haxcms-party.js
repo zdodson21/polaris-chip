@@ -19,7 +19,7 @@ export class HaxCMSParty extends DDD {
         return [
             super.styles,
             css `
-            
+
             `
         ]
     }
@@ -28,9 +28,11 @@ export class HaxCMSParty extends DDD {
         return html `
             <div class='add-members'>
                 <h2>Add Members</h2>
-                <form class='add-input'> <!-- User will input a name for their party member, which will go through addUser() to generate a character -->
-                    <input type='text' id='add-user-text'></input>
-                    <button id='add-user-btn' @click=${this.addUser}>Add User</button>
+                <form class='add-input' @submit=${this.addUser}> <!-- User will input a name for their party member, which will go through addUser() to generate a character -->
+                    <label for="character-name">Party Member Name:</label><br>
+                    <input type='text' name='character-name' id='add-user-text'/>
+                    <!-- <button id='add-user-btn' @click=${this.addUser}>Add User</button> -->
+                    <input type="submit" value='Add User'>
                 </form>
             </div>
             <div class='party'>
@@ -40,29 +42,42 @@ export class HaxCMSParty extends DDD {
                 </div>
             </div>
             <div class='confirmation-control'>
-                <button id='save'>Save</button>
-                <button id='cancel'>Cancel</button>
+                <button id='save' @click=${this.saveParty}>Save</button>
+                <button id='cancel' @click=${this.cancelChanges}>Cancel</button>
             </div>
         `
     }
 
-    // add script for pressing enter when input box, pressing enter does same as clicking 'Add user' button (may have to use script tag above)
-    // https://www.w3schools.com/howto/howto_js_trigger_button_enter.asp
-    
-
-    addUser() {
+    addUser(e) {
         /* 
         TODO:
-            
-            2. Clear name from text input
             3. Create tag for new rpg-character, assign 'seed' attribute to the value of newPartyMember
             4. Add button (or image if I have it) that can be used to to remove party member (fades sprite (again, if possible))
         */
-        const partyShowcaseSelect = document.querySelector('haxcms-party').shadowRoot.querySelector('.party .party-showcase');
-        let newPartyMember = document.querySelector('haxcms-party').shadowRoot.querySelector('#add-user-text').value;
-        console.log(newPartyMember);
+        e.preventDefault();
+        console.log('Add User Pressed...');
+        const partyShowcaseSelector = document.querySelector('haxcms-party').shadowRoot.querySelector('.party .party-showcase');
+        let newMemberField = document.querySelector('haxcms-party').shadowRoot.querySelector('#add-user-text');
+        let memberName = newMemberField.value;
 
-        
+        if (memberName === '') {
+            alert('Please input a name for your new party member!')
+        } else {
+            // start process of adding character to party (instructions above)
+            newMemberField.value = '';
+            console.log(memberName);
+        }
+    }
+
+    saveParty() {
+        console.log('Save pressed...')
+        // in this case, hopefully can get this to work with local storage
+    }
+
+    cancelChanges() {
+        console.log('Cancel pressed...')
+        // refreshing the page would be a quick option to cancel changes???
+        // is canceling even really needed???
     }
 
     static get properties() {
