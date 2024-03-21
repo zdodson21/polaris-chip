@@ -28,10 +28,10 @@ export class HaxCMSParty extends DDD {
         return html `
             <div class='add-members'>
                 <h2>Add Members</h2>
-                <div class='add-input'> <!-- User will input a name for their party member, which will go through addUser() to generate a character -->
+                <form class='add-input'> <!-- User will input a name for their party member, which will go through addUser() to generate a character -->
                     <input type='text' id='add-user-text'></input>
                     <button id='add-user-btn' @click=${this.addUser}>Add User</button>
-                </div>
+                </form>
             </div>
             <div class='party'>
                 <h2>Your Current Party</h2>
@@ -46,16 +46,23 @@ export class HaxCMSParty extends DDD {
         `
     }
 
+    // add script for pressing enter when input box, pressing enter does same as clicking 'Add user' button (may have to use script tag above)
+    // https://www.w3schools.com/howto/howto_js_trigger_button_enter.asp
+    
+
     addUser() {
         /* 
         TODO:
-            1. Pull name from user input, which is stored into newPartyMember to be used for RPG character name.
+            
             2. Clear name from text input
-            3. Create tag for new rpg-character, using newPartyMember to assign the name of the RPG character.
+            3. Create tag for new rpg-character, assign 'seed' attribute to the value of newPartyMember
+            4. Add button (or image if I have it) that can be used to to remove party member (fades sprite (again, if possible))
         */
-        const partyShowcase = document.querySelector('haxcms-party').shadowRoot.querySelector('.party .party-showcase');
+        const partyShowcaseSelect = document.querySelector('haxcms-party').shadowRoot.querySelector('.party .party-showcase');
         let newPartyMember = document.querySelector('haxcms-party').shadowRoot.querySelector('#add-user-text').value;
         console.log(newPartyMember);
+
+        
     }
 
     static get properties() {
