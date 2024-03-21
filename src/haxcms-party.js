@@ -3,7 +3,6 @@ import { DDD } from "@lrnwebcomponents/d-d-d/d-d-d.js";
 import "@lrnwebcomponents/rpg-character/rpg-character.js";
 
 
-
 export class HaxCMSParty extends DDD {
 
     static get tag() {
@@ -52,7 +51,7 @@ export class HaxCMSParty extends DDD {
                 <div class='party-showcase'>
                     ${this.partyMembers.map((rpgCharacter) => html`
                         <div class='user-character'>
-                            <rpg-character seed="${rpgCharacter.seed}"></rpg-character>
+                            <rpg-character seed="${rpgCharacter.seed}" onclick='parentNode.classList.add("to-remove"); //see if this can call a function'></rpg-character> 
                             <button class='remove-character' style='opacity: 1' onclick='parentNode.classList.add("to-remove"); this.removeQueue.push("${rpgCharacter}");'>X</button>
                             <p>${rpgCharacter.seed}</p>
                         </div>
