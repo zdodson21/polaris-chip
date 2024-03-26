@@ -19,6 +19,7 @@ export class HaxCMSParty extends DDD {
         return [
             super.styles,
             css`
+                /* https://oer.hax.psu.edu/bto108/sites/haxcellence/documentation/ddd */
                 .party-showcase {
                     display: flex;
                     flex-wrap: wrap;
@@ -30,8 +31,17 @@ export class HaxCMSParty extends DDD {
 
                 #delete-btn {
                     opacity: 1;
-                    width: 95%
+                    width: 95%;
+                    background-color: var(--ddd-theme-default-discoveryCoral);
+                    color: white;
                 }
+
+                .to-remove #delete-btn{
+                    opacity: 1.5;
+                    background-color: var(--ddd-theme-default-futureLime);
+                    color: black;
+                }
+
             `
         ]
     }
@@ -44,19 +54,21 @@ export class HaxCMSParty extends DDD {
                     <label for="character-name">Party Member Name:</label><br>
                     <input type='text' name='character-name' placeholder='Type Name Here...' id='add-user-text'/>
                     <input type="submit" value='Add User'> <br>
+                    <label for="hats">Please Select a Hat:</label><br>
+                    <select name="hats" id="hat-select">
+                        <option value="none">--Please Select a Hat--</option>
+                        <option value="bunny">Bunny</option>
+                        <option value="coffee">Coffee</option>
+                        <option value="construction">Construction</option>                        
+                        <option value="cowboy">Cowboy</option>
+                        <option value="education">Education</option>
+                        <option value="knight">Knight</option>
+                        <option value="ninja">Ninja</option>
+                        <option value="party">Party</option>
+                        <option value="pirate">Pirate</option>
+                        <option value="watermelon">Watermelon</option>
+                    </select>
                 </form>
-                <select name="hats" id="hat-select">
-                    <option value="none">--Please Select a Hat--</option>
-                    <option value="bunny">Bunny</option>
-                    <option value="coffee">Coffee</option>
-                    <option value="construction">Construction</option>                        <option value="cowbow">Cowboy / Cowgirl</option>
-                    <option value="education">Education</option>
-                    <option value="knight">Knight</option>
-                    <option value="ninja">Ninja</option>
-                    <option value="party">Party</option>
-                    <option value="pirate">Pirate</option>
-                    <option value="watermelon">Watermelon</option>
-                </select>
             </div>
             <div class='party'>
                 <h2>Your Current Party</h2>
@@ -65,26 +77,26 @@ export class HaxCMSParty extends DDD {
                         <div class='user-character'>
                             <rpg-character seed="${rpgCharacter.seed}" hat='${rpgCharacter.hat}' class='${rpgCharacter.seed}'></rpg-character> 
                             <p style='text-align: center' class='${rpgCharacter.seed}'>${rpgCharacter.seed}</p>
-                            <button id='delete-btn' name='${rpgCharacter.seed}' style='opacity: 1' @click=${this.removeUser}>Delete</button>
+                            <button id='delete-btn' name='${rpgCharacter.seed}' @click=${this.removeUser}>Delete</button>
                         </div>
                     `)}
                 </div>
             </div>
             <div class='confirmation-control'>
                 <button id='save' @click=${this.saveParty}>Save</button>
-                <button id='cancel' @click=${this.cancelChanges}>Cancel</button>
+                
             </div>
         `
     }
 
     addUser(e) {
-        console.log('Add User Pressed...');
+        // console.log('Add User Pressed...');
         e.preventDefault(); // prevents page refresh on form submission
         
         // const partyShowcaseSelector = document.querySelector('haxcms-party').shadowRoot.querySelector('.party .party-showcase');
         const newMemberField = document.querySelector('haxcms-party').shadowRoot.querySelector('#add-user-text');
         const hatSelection = document.querySelector('haxcms-party').shadowRoot.querySelector('#hat-select').value;
-        console.log(hatSelection);
+        // console.log(hatSelection);
         const memberName = newMemberField.value;
 
         if (memberName === '') {
@@ -101,6 +113,7 @@ export class HaxCMSParty extends DDD {
         }
     }
 
+
     removeUser(e) {
         const targetClassList = e.target.parentNode.classList;
         const memberName = e.target.getAttribute('name');
@@ -110,25 +123,27 @@ export class HaxCMSParty extends DDD {
             seed: memberName,
         }
 
-        console.log('removeUser called...');
+        // console.log('removeUser called...');
 
         if (targetClassList.contains("to-remove")) { // removes character from the deletion queue
-            console.log('removing from delete queue...')
+            // console.log('removing from delete queue...')
             targetClassList.remove("to-remove");
-            console.log(targetClassList)
+            // console.log(targetClassList)
             const index = this.removeQueue.indexOf(removeName) + 1;
-            console.log(index)
+            // console.log(index)
             if (index > -1) {
                 this.removeQueue.splice(index, 1);
-            } // this is not working
-            console.log(this.removeQueue);
+            }
+            e.target.innerText = 'Delete';
+            // console.log(this.removeQueue);
         } else { // Adds character to the deletion queue
-            console.log('adding to delete queue')
+            // console.log('adding to delete queue');
             targetClassList.add("to-remove");
-            console.log(targetClassList)
+            e.target.innerText = 'Undo Delete';
+            // console.log(targetClassList)
             this.removeQueue.push(removeName);
             this.requestUpdate();
-            console.log(this.removeQueue);
+            // console.log(this.removeQueue);
         }
 
     }
@@ -139,11 +154,7 @@ export class HaxCMSParty extends DDD {
         // could use array to store changes (maybe)???
     }
 
-    cancelChanges() {
-        console.log('Cancel pressed...')
-        // refreshing the page would be a quick option to cancel changes???
-        // is canceling even really needed???
-    }
+    // create a "reset" debug command, comment out when done, for testing purposes only
 
     static get properties() {
         return {
