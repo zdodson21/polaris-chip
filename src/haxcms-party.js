@@ -89,7 +89,7 @@ export class HaxCMSParty extends DDD {
         `
     }
 
-    addUser(e) {
+    addUser(e) { // needs to make text change to lower case
         // console.log('Add User Pressed...');
         e.preventDefault(); // prevents page refresh on form submission
         
@@ -150,6 +150,27 @@ export class HaxCMSParty extends DDD {
 
     saveParty() {
         console.log('Save pressed...')
+
+        if (this.partyMembers.length <= 0) {
+            alert('No party members');
+        } else {
+            
+            /*
+                Steps:
+                1. use for each loop (or for loop) to remove each member from partyMembers who is also in removeQueue
+                2. Confetti
+            */
+            this.partyMembers.forEach((i) => {
+                console.log('found item in party')
+                this.removeQueue.forEach((j) => {
+                    console.log('found item for removal');
+                    if (i === j) {
+                        console.log('found similarity')
+                    }
+                })
+            })
+            alert('Saved party');
+        }
         // needs to be able to to save to local storage any party member that is not part of a 'removed' class
         // could use array to store changes (maybe)???
     }
