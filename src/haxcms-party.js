@@ -18,7 +18,7 @@ export class HaxCMSParty extends DDD {
     static get styles() {
         return [
             super.styles,
-            css `
+            css`
                 .party-showcase {
                     display: flex;
                     flex-wrap: wrap;
@@ -28,8 +28,9 @@ export class HaxCMSParty extends DDD {
                     opacity: 0.5
                 }
 
-                .remove-character {
+                #delete-btn {
                     opacity: 1;
+                    width: 95%
                 }
             `
         ]
@@ -42,18 +43,29 @@ export class HaxCMSParty extends DDD {
                 <form class='add-input' @submit=${this.addUser}> <!-- User will input a name for their party member, which will go through addUser() to generate a character -->
                     <label for="character-name">Party Member Name:</label><br>
                     <input type='text' name='character-name' placeholder='Type Name Here...' id='add-user-text'/>
-                    <!-- <button id='add-user-btn' @click=${this.addUser}>Add User</button> -->
-                    <input type="submit" value='Add User'>
+                    <input type="submit" value='Add User'> <br>
                 </form>
+                <select name="hats" id="hat-select">
+                    <option value="none">--Please Select a Hat--</option>
+                    <option value="bunny">Bunny</option>
+                    <option value="coffee">Coffee</option>
+                    <option value="construction">Construction</option>                        <option value="cowbow">Cowboy / Cowgirl</option>
+                    <option value="education">Education</option>
+                    <option value="knight">Knight</option>
+                    <option value="ninja">Ninja</option>
+                    <option value="party">Party</option>
+                    <option value="pirate">Pirate</option>
+                    <option value="watermelon">Watermelon</option>
+                </select>
             </div>
             <div class='party'>
                 <h2>Your Current Party</h2>
                 <div class='party-showcase'>
                     ${this.partyMembers.map((rpgCharacter) => html`
                         <div class='user-character'>
-                            <rpg-character seed="${rpgCharacter.seed}" onclick='parentNode.classList.add("to-remove"); //see if this can call a function'></rpg-character> 
-                            <button class='remove-character' style='opacity: 1' onclick='parentNode.classList.add("to-remove"); this.removeQueue.push("${rpgCharacter}");'>X</button>
-                            <p>${rpgCharacter.seed}</p>
+                            <rpg-character seed="${rpgCharacter.seed}" hat='${rpgCharacter.hat}' class='${rpgCharacter.seed}'></rpg-character> 
+                            <p style='text-align: center' class='${rpgCharacter.seed}'>${rpgCharacter.seed}</p>
+                            <button id='delete-btn' name='${rpgCharacter.seed}' style='opacity: 1' @click=${this.removeUser}>Delete</button>
                         </div>
                     `)}
                 </div>
@@ -66,11 +78,13 @@ export class HaxCMSParty extends DDD {
     }
 
     addUser(e) {
-        // console.log('Add User Pressed...');
+        console.log('Add User Pressed...');
         e.preventDefault(); // prevents page refresh on form submission
         
-        const partyShowcaseSelector = document.querySelector('haxcms-party').shadowRoot.querySelector('.party .party-showcase');
+        // const partyShowcaseSelector = document.querySelector('haxcms-party').shadowRoot.querySelector('.party .party-showcase');
         const newMemberField = document.querySelector('haxcms-party').shadowRoot.querySelector('#add-user-text');
+        const hatSelection = document.querySelector('haxcms-party').shadowRoot.querySelector('#hat-select').value;
+        console.log(hatSelection);
         const memberName = newMemberField.value;
 
         if (memberName === '') {
@@ -80,15 +94,44 @@ export class HaxCMSParty extends DDD {
 
             const rpgCharacter = {
                 seed: memberName,
+                hat: hatSelection,
             }
             this.partyMembers.push(rpgCharacter);
             this.requestUpdate();
         }
     }
 
-    // removeUser() {
-    //     parentNode.remove
-    // }
+    removeUser(e) {
+        const targetClassList = e.target.parentNode.classList;
+        const memberName = e.target.getAttribute('name');
+        // console.log(memberName)
+        
+        const removeName = {
+            seed: memberName,
+        }
+
+        console.log('removeUser called...');
+
+        if (targetClassList.contains("to-remove")) { // removes character from the deletion queue
+            console.log('removing from delete queue...')
+            targetClassList.remove("to-remove");
+            console.log(targetClassList)
+            const index = this.removeQueue.indexOf(removeName) + 1;
+            console.log(index)
+            if (index > -1) {
+                this.removeQueue.splice(index, 1);
+            } // this is not working
+            console.log(this.removeQueue);
+        } else { // Adds character to the deletion queue
+            console.log('adding to delete queue')
+            targetClassList.add("to-remove");
+            console.log(targetClassList)
+            this.removeQueue.push(removeName);
+            this.requestUpdate();
+            console.log(this.removeQueue);
+        }
+
+    }
 
     saveParty() {
         console.log('Save pressed...')
