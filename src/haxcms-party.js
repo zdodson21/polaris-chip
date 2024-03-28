@@ -13,6 +13,7 @@ export class HaxCMSParty extends DDD {
         super();
         this.partyMembers = [];
         this.removeQueue = [];
+        this.rpgId = 0;
     }
 
     static get styles() {
@@ -20,6 +21,22 @@ export class HaxCMSParty extends DDD {
             super.styles,
             css`
                 /* https://oer.hax.psu.edu/bto108/sites/haxcellence/documentation/ddd */
+                :host {
+                    font-family: var(--ddd-font-primary)
+                }
+                
+                .add-input {
+                    text-align: center;
+                    
+                }
+
+                .select-hat {
+                    margin-top: var(--ddd-spacing-2);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+                
                 .party-showcase {
                     display: flex;
                     flex-wrap: wrap;
@@ -42,6 +59,10 @@ export class HaxCMSParty extends DDD {
                     color: black;
                 }
 
+                h2 {
+                    text-align: center;
+                }
+
             `
         ]
     }
@@ -49,25 +70,28 @@ export class HaxCMSParty extends DDD {
     render() {
         return html `
             <div class='add-members'>
-                <h2>Add Members</h2>
+                <h2 style='text-align: center;'>Add Members</h2>
                 <form class='add-input' @submit=${this.addUser}> <!-- User will input a name for their party member, which will go through addUser() to generate a character -->
-                    <label for="character-name">Party Member Name:</label><br>
-                    <input type='text' name='character-name' placeholder='Type Name Here...' id='add-user-text'/>
-                    <input type="submit" value='Add User'> <br>
-                    <label for="hats">Please Select a Hat:</label><br>
-                    <select name="hats" id="hat-select">
-                        <option value="none">--Please Select a Hat--</option>
-                        <option value="bunny">Bunny</option>
-                        <option value="coffee">Coffee</option>
-                        <option value="construction">Construction</option>                        
-                        <option value="cowboy">Cowboy</option>
-                        <option value="education">Education</option>
-                        <option value="knight">Knight</option>
-                        <option value="ninja">Ninja</option>
-                        <option value="party">Party</option>
-                        <option value="pirate">Pirate</option>
-                        <option value="watermelon">Watermelon</option>
-                    </select>
+                    <div class='add-party-member'>
+                        <label for="character-name">Party Member Name:</label><br>
+                        <input type='text' name='character-name' placeholder='Type Name Here...' id='add-user-text'/>
+                        <input type="submit" value='Add User'> <br>
+                    </div>
+                    <div class='select-hat'>
+                        <select name="hats" id="hat-select">
+                            <option value="none">--Please Select a Hat--</option>
+                            <option value="bunny">Bunny</option>
+                            <option value="coffee">Coffee</option>
+                            <option value="construction">Construction</option>                        
+                            <option value="cowboy">Cowboy</option>
+                            <option value="education">Education</option>
+                            <option value="knight">Knight</option>
+                            <option value="ninja">Ninja</option>
+                            <option value="party">Party</option>
+                            <option value="pirate">Pirate</option>
+                            <option value="watermelon">Watermelon</option>
+                        </select>
+                    </div>
                 </form>
             </div>
             <div class='party'>
@@ -75,9 +99,9 @@ export class HaxCMSParty extends DDD {
                 <div class='party-showcase'>
                     ${this.partyMembers.map((rpgCharacter) => html`
                         <div class='user-character'>
-                            <rpg-character seed="${rpgCharacter.seed}" hat='${rpgCharacter.hat}' class='${rpgCharacter.seed}'></rpg-character> 
+                            <rpg-character seed="${rpgCharacter.seed}" hat='${rpgCharacter.hat}' id='rpg-${rpgCharacter.id}' class='${rpgCharacter.seed}'></rpg-character> 
                             <p style='text-align: center' class='${rpgCharacter.seed}'>${rpgCharacter.seed}</p>
-                            <button id='delete-btn' name='${rpgCharacter.seed}' @click=${this.removeUser}>Delete</button>
+                            <button id='delete-btn' rpgID='${rpgCharacter.id}' @click=${this.removeUser}>Delete</button>
                         </div>
                     `)}
                 </div>
@@ -97,30 +121,34 @@ export class HaxCMSParty extends DDD {
         const newMemberField = document.querySelector('haxcms-party').shadowRoot.querySelector('#add-user-text');
         const hatSelection = document.querySelector('haxcms-party').shadowRoot.querySelector('#hat-select').value;
         // console.log(hatSelection);
-        const memberName = newMemberField.value;
+        const memberName = newMemberField.value.toLowerCase();
 
         if (memberName === '') {
             alert('Please input a name for your new party member!')
+        } else if (memberName.length > 10) {
+            alert('Please shorten your member name to be less than 10 characters!')
         } else {
             newMemberField.value = '';
 
             const rpgCharacter = {
                 seed: memberName,
                 hat: hatSelection,
+                id: this.rpgId,
             }
             this.partyMembers.push(rpgCharacter);
             this.requestUpdate();
         }
+        this.rpgId += 1;
     }
 
 
     removeUser(e) {
         const targetClassList = e.target.parentNode.classList;
-        const memberName = e.target.getAttribute('name');
+        const rpgID = e.target.getAttribute('rpgID');
         // console.log(memberName)
         
-        const removeName = {
-            seed: memberName,
+        const removeID = {
+            id: rpgID
         }
 
         // console.log('removeUser called...');
@@ -129,7 +157,7 @@ export class HaxCMSParty extends DDD {
             // console.log('removing from delete queue...')
             targetClassList.remove("to-remove");
             // console.log(targetClassList)
-            const index = this.removeQueue.indexOf(removeName) + 1;
+            const index = this.removeQueue.indexOf(removeID) + 1;
             // console.log(index)
             if (index > -1) {
                 this.removeQueue.splice(index, 1);
@@ -141,7 +169,7 @@ export class HaxCMSParty extends DDD {
             targetClassList.add("to-remove");
             e.target.innerText = 'Undo Delete';
             // console.log(targetClassList)
-            this.removeQueue.push(removeName);
+            this.removeQueue.push(removeID);
             this.requestUpdate();
             // console.log(this.removeQueue);
         }
@@ -150,6 +178,8 @@ export class HaxCMSParty extends DDD {
 
     saveParty() {
         console.log('Save pressed...')
+
+        let minusTrigger = false;
 
         if (this.partyMembers.length <= 0) {
             alert('No party members');
@@ -161,16 +191,37 @@ export class HaxCMSParty extends DDD {
                 2. Confetti
             */
             this.partyMembers.forEach((i) => {
-                console.log('found item in party')
+                console.log('found item in party');
+                console.log(i);
+                console.log('Element ID: ' + i.id);
                 this.removeQueue.forEach((j) => {
                     console.log('found item for removal');
-                    if (i === j) {
-                        console.log('found similarity')
+                    console.log(j);
+                    if (i.id == j.id) {
+                        console.log('deleting partyMember.id: ' + i.id + ' & removeQueue.id: ' + j.id)
+                        this.partyMembers.splice(j.id, 1);
+                        this.removeQueue.splice(j.id, 1)
+                        // bug: removes first applicable ID, but because array shifts it then removes 'incorrect' ID
+                        minusTrigger = true;
+                        this.requestUpdate();
+                        if (minusTrigger === true) {
+                            console.log('trigger tripped...');
+                            i--;
+                            minusTrigger = false;
+                        }
                     }
+                    // need to compare rpgIDs and go from there for deletion
                 })
+                
             })
-            alert('Saved party');
+            
+            if (this.removeQueue.lengh > 0) {
+                this.removeQueue.length = 0;
+            }
+            // alert('Saved party');
         }
+
+        document.querySelector('haxcms-party').shadowRoot.querySelectorAll('#delete-btn').classList.remove('to-remove'); //need to figure out how to make this work
         // needs to be able to to save to local storage any party member that is not part of a 'removed' class
         // could use array to store changes (maybe)???
     }
