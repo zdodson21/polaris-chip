@@ -2,7 +2,9 @@ import { DDD } from "@lrnwebcomponents/d-d-d/d-d-d.js";
 import "@lrnwebcomponents/rpg-character/rpg-character.js";
 import { css, html } from 'lit';
 
-
+/**
+ * https://github.com/elmsln/issues/issues/1950
+ */
 
 export class HaxCMSParty extends DDD {
 
@@ -23,17 +25,22 @@ export class HaxCMSParty extends DDD {
             css`
                 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-                /* https://oer.hax.psu.edu/bto108/sites/haxcellence/documentation/ddd */
+                /* 
+                
+                CSS is based around variables / standards of 'Design, Develop, Destroy' (DDD). Styleguide for DDD can be found at the link below
+
+                https://oer.hax.psu.edu/bto108/sites/haxcellence/documentation/ddd 
+                
+                */
                 :host {
                     font-family: "Press Start 2P", var(--ddd-font-primary);
                 }
                 
                 .haxcms-party-container {
-                    /* border-style: solid; */
                     border: var(--ddd-border-md);
                     border-color: black;
                     padding: var(--ddd-spacing-2);
-                    width: 50%;
+                    /* set width using @media */
                 }
                 
                 .add-input {
@@ -52,15 +59,18 @@ export class HaxCMSParty extends DDD {
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
-                    align-items: center
+                    align-items: center;
                 }
 
                 .party-showcase {
                     max-width: 575px;
-                    min-width: 0px;
+                    /* min-width: 0px; */
                     display: flex;
+                    flex: 1;
                     justify-content: center;
                     flex-wrap: wrap;
+                    padding: var(--ddd-spacing-2);
+                    overflow-y: auto; /* For some reason does not work??? */
                 }
 
                 .border {
@@ -84,14 +94,14 @@ export class HaxCMSParty extends DDD {
                     opacity: 0.5;
                 }
 
-                #delete-btn {
+                .delete-btn {
                     opacity: 1;
                     width: 95%;
                     background-color: var(--ddd-theme-default-discoveryCoral);
                     color: white;
                 }
 
-                .to-remove #delete-btn{
+                .to-remove .delete-btn {
                     opacity: 1.5;
                     background-color: var(--ddd-theme-default-futureLime);
                     color: black;
@@ -140,7 +150,7 @@ export class HaxCMSParty extends DDD {
                             <div class='user-character'>
                                 <rpg-character seed="${rpgCharacter.seed}" hat='${rpgCharacter.hat}' id='rpg-${rpgCharacter.id}' class='${rpgCharacter.seed}'></rpg-character> 
                                 <p style='text-align: center' class='${rpgCharacter.seed}'>${rpgCharacter.seed}</p>
-                                <button id='delete-btn' rpgID='${rpgCharacter.id}' @click=${this.removeUser}>Delete</button>
+                                <button class='delete-btn' rpgID='${rpgCharacter.id}' @click=${this.removeUser}>Delete</button>
                             </div>
                         `)}
                     </div>
@@ -160,7 +170,7 @@ export class HaxCMSParty extends DDD {
         const newMemberField = document.querySelector('haxcms-party').shadowRoot.querySelector('#add-user-text');
         const hatSelection = document.querySelector('haxcms-party').shadowRoot.querySelector('#hat-select').value;
         // console.log(hatSelection);
-        const memberName = newMemberField.value.toLowerCase();
+        const memberName = newMemberField.value.toLowerCase(); // TODO need to change so only lower case and numbers is allowed, no spaces or special characters
         let similarName = false;
 
         this.partyMembers.forEach((i) => {
@@ -261,6 +271,19 @@ export class HaxCMSParty extends DDD {
             
             alert('Saved party');
         }
+
+        const fixClassList = document.querySelector('haxcms-party').shadowRoot.querySelectorAll('.user-character');
+        const fixButtonText = document.querySelector('haxcms-party').shadowRoot.querySelectorAll('.delete-btn');
+
+        fixClassList.forEach((element) => {
+            if (element.classList.contains('to-remove')) {
+                element.classList.remove('to-remove');
+            }
+        })
+
+        fixButtonText.forEach((element) => {
+            element.innerText = 'Delete';
+        })
 
         this.borderController();
         // needs to be able to to save to local storage any party member that is not part of a 'removed' class
