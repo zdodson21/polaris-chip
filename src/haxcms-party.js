@@ -5,6 +5,7 @@ import { css, html } from 'lit';
 
 /**
  * https://github.com/elmsln/issues/issues/1950
+ * @author {Zach Dodson}
  */
 
 export class HaxCMSParty extends DDD {
@@ -26,12 +27,10 @@ export class HaxCMSParty extends DDD {
             css`
                 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-                /* 
-                
+                /*               
                 CSS is based around variables / standards of 'Design, Develop, Destroy' (DDD). Styleguide for DDD can be found at the link below
 
                 https://oer.hax.psu.edu/bto108/sites/haxcellence/documentation/ddd 
-                
                 */
                 :host {
                     font-family: "Press Start 2P", var(--ddd-font-primary);
@@ -256,13 +255,13 @@ export class HaxCMSParty extends DDD {
                 3. Save partyMembers to local storage
             */
 
-            for (let i = 0; i < this.partyMembers.length; i++) {
+            for (let i = 0; i < this.removeQueue.length; i++) {
                 // console.log(this.partyMembers[i]);
-                for (let j = 0; j < this.removeQueue.length; j++) {
+                for (let j = 0; j < this.partyMembers.length; j++) {
                     // console.log(this.removeQueue[j]);
-                    if (this.partyMembers[i].id == this.removeQueue[j].id) {
+                    if (this.partyMembers[j].id == this.removeQueue[i].id) {
                         // console.log('found similar ID');
-                        this.partyMembers.splice(i, 1);
+                        this.partyMembers.splice(j, 1);
                         this.requestUpdate();
                     }
                 }
@@ -275,26 +274,10 @@ export class HaxCMSParty extends DDD {
             }
             
             this.makeItRain();
-
-            // alert('Saved party');
+            this.formatFixer();
+            this.borderController();
+            console.log(this.partyMembers)
         }
-        
-
-        const fixClassList = this.shadowRoot.querySelectorAll('.user-character');
-        const fixButtonText = this.shadowRoot.querySelectorAll('.delete-btn');
-
-        fixClassList.forEach((element) => {
-            if (element.classList.contains('to-remove')) {
-                element.classList.remove('to-remove');
-            }
-        })
-
-        fixButtonText.forEach((element) => {
-            element.innerText = 'Delete';
-        })
-
-        this.borderController();
-        // needs to be able to to save to local storage any party member that is not part of a 'removed' class
     }
 
     makeItRain() {
@@ -317,7 +300,20 @@ export class HaxCMSParty extends DDD {
         );
       }
 
-    // create a "reset" debug command, comment out when done, for testing purposes only???
+    formatFixer() {
+        const fixClassList = this.shadowRoot.querySelectorAll('.user-character');
+        const fixButtonText = this.shadowRoot.querySelectorAll('.delete-btn');
+
+        fixClassList.forEach((element) => {
+            if (element.classList.contains('to-remove')) {
+                element.classList.remove('to-remove');
+            }
+        })
+
+        fixButtonText.forEach((element) => {
+            element.innerText = 'Delete';
+        })
+    }
 
     borderController() {
         const showcase = document.querySelector('haxcms-party').shadowRoot.querySelector('.party-showcase');
