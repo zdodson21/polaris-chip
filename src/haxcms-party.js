@@ -3,6 +3,7 @@ import { DDD } from "@lrnwebcomponents/d-d-d/d-d-d.js";
 import "@lrnwebcomponents/rpg-character/rpg-character.js";
 
 
+
 export class HaxCMSParty extends DDD {
 
     static get tag() {
@@ -20,9 +21,11 @@ export class HaxCMSParty extends DDD {
         return [
             super.styles,
             css`
+                @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
                 /* https://oer.hax.psu.edu/bto108/sites/haxcellence/documentation/ddd */
                 :host {
-                    font-family: var(--ddd-font-primary);
+                    font-family: "Press Start 2P", var(--ddd-font-primary);
                 }
                 
                 .add-input {
@@ -113,7 +116,6 @@ export class HaxCMSParty extends DDD {
             </div>
             <div class='confirmation-control'>
                 <button id='save' @click=${this.saveParty}>Save</button>
-                
             </div>
         `
     }
@@ -127,11 +129,23 @@ export class HaxCMSParty extends DDD {
         const hatSelection = document.querySelector('haxcms-party').shadowRoot.querySelector('#hat-select').value;
         // console.log(hatSelection);
         const memberName = newMemberField.value.toLowerCase();
+        let similarName = false;
+
+        this.partyMembers.forEach((i) => {
+            // console.log('checking similarities')
+            if (memberName == i.seed) {
+                // console.log('found similarity')
+                similarName = true;
+            }
+        })
 
         if (memberName === '') {
-            alert('Please input a name for your new party member!')
+            alert('Please input a name for your new party member!');
         } else if (memberName.length > 10) {
-            alert('Please shorten your member name to be less than 10 characters!')
+            alert('Please shorten your member name to be less than 10 characters!');
+        } else if (similarName === true) {
+            alert('Party member already exists!');
+            newMemberField.value = '';
         } else {
             newMemberField.value = '';
 
@@ -193,6 +207,7 @@ export class HaxCMSParty extends DDD {
                 Steps:
                 1. use for each loop (or for loop) to remove each member from partyMembers who is also in removeQueue
                 2. Confetti
+                3. Save partyMembers to local storage
             */
 
             for (let i = 0; i < this.partyMembers.length; i++) {
@@ -201,13 +216,11 @@ export class HaxCMSParty extends DDD {
                     console.log(this.removeQueue[j]);
                     if (this.partyMembers[i].id == this.removeQueue[j].id) {
                         console.log('found similar ID');
-                        this.partyMembers.splice(i, 1)
+                        this.partyMembers.splice(i, 1);
                         this.requestUpdate();
                     }
                 }
             }
-
-            // document.querySelector('haxcms-party').shadowRoot.querySelector('.party-showcase').classList.remove('to-remove')
 
             if (this.removeQueue.lengh > 0) {
                 this.removeQueue.length = 0;
