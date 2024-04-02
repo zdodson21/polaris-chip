@@ -120,7 +120,7 @@ export class HaxCMSParty extends DDD {
             <div class='haxcms-party-container'>
                 <div class='add-members'>
                     <h2 style='text-align: center;'>Add Members</h2>
-                    <form class='add-input' @submit=${this.addUser}> <!-- User will input a name for their party member, which will go through addUser() to generate a character -->
+                    <form class='add-input' @submit=${this.addUser}>
                         <div class='add-party-member'>
                             <label for="character-name">Party Member Name:</label><br>
                             <input type='text' name='character-name' placeholder='Type Name Here...' id='add-user-text'/>
@@ -164,15 +164,16 @@ export class HaxCMSParty extends DDD {
         `
     }
 
-    addUser(e) { // needs to make text change to lower case
-        // console.log('Add User Pressed...');
+
+    /**
+     * Pulls the value from the text input box, which is used to name the character and adds it to partyMembers[]
+     */
+    addUser(e) {
         e.preventDefault(); // prevents page refresh on form submission
         
-        // const partyShowcaseSelector = document.querySelector('haxcms-party').shadowRoot.querySelector('.party .party-showcase');
         const newMemberField = this.shadowRoot.querySelector('#add-user-text');
         const hatSelection = this.shadowRoot.querySelector('#hat-select').value;
-        // console.log(hatSelection);
-        const memberName = newMemberField.value.toLowerCase(); // TODO need to change so only lower case and numbers is allowed, no spaces or special characters
+        const memberName = newMemberField.value.toLowerCase(); // TODO change to regex
         let similarName = false;
 
         this.partyMembers.forEach((i) => {
@@ -201,7 +202,7 @@ export class HaxCMSParty extends DDD {
             this.partyMembers.push(rpgCharacter);
             this.requestUpdate();
         }
-        this.rpgId += 1;
+        this.rpgId++;
         this.borderController();
     }
 
@@ -241,42 +242,30 @@ export class HaxCMSParty extends DDD {
     }
 
     saveParty() {
-        // console.log('Save pressed...')
-
-
         if (this.partyMembers.length <= 0) {
-            alert('No party members');
+            alert('No party members!');
         } else {
-            
-            /*
-                Steps:
-                1. use for each loop (or for loop) to remove each member from partyMembers who is also in removeQueue
-                2. Confetti
-                3. Save partyMembers to local storage
-            */
-
             for (let i = 0; i < this.removeQueue.length; i++) {
-                // console.log(this.partyMembers[i]);
                 for (let j = 0; j < this.partyMembers.length; j++) {
-                    // console.log(this.removeQueue[j]);
                     if (this.partyMembers[j].id == this.removeQueue[i].id) {
-                        // console.log('found similar ID');
                         this.partyMembers.splice(j, 1);
                         this.requestUpdate();
                     }
                 }
             }
 
-            // Does not work while entering characters randomly :(
-
-            if (this.removeQueue.lengh > 0) {
+            if (this.removeQueue.length > 0) {
                 this.removeQueue.length = 0;
             }
+
+
+            if (this.partyMembers.length > 0) {
+                this.makeItRain();
+            }
             
-            this.makeItRain();
             this.formatFixer();
             this.borderController();
-            console.log(this.partyMembers)
+            console.log(this.partyMembers);
         }
     }
 
@@ -316,7 +305,7 @@ export class HaxCMSParty extends DDD {
     }
 
     borderController() {
-        const showcase = document.querySelector('haxcms-party').shadowRoot.querySelector('.party-showcase');
+        const showcase = this.shadowRoot.querySelector('.party-showcase');
         
         if (this.partyMembers.length === 0) {
             showcase.classList.remove('border');
