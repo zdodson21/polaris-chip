@@ -22,7 +22,7 @@ export class HaxCMSParty extends DDD {
             css`
                 /* https://oer.hax.psu.edu/bto108/sites/haxcellence/documentation/ddd */
                 :host {
-                    font-family: var(--ddd-font-primary)
+                    font-family: var(--ddd-font-primary);
                 }
                 
                 .add-input {
@@ -42,8 +42,13 @@ export class HaxCMSParty extends DDD {
                     flex-wrap: wrap;
                 }
 
+                .confirmation-control {
+                    display: flex;
+                    justify-content: center;
+                }
+
                 .to-remove {
-                    opacity: 0.5
+                    opacity: 0.5;
                 }
 
                 #delete-btn {
@@ -179,7 +184,6 @@ export class HaxCMSParty extends DDD {
     saveParty() {
         console.log('Save pressed...')
 
-        let minusTrigger = false;
 
         if (this.partyMembers.length <= 0) {
             alert('No party members');
@@ -190,43 +194,33 @@ export class HaxCMSParty extends DDD {
                 1. use for each loop (or for loop) to remove each member from partyMembers who is also in removeQueue
                 2. Confetti
             */
-            this.partyMembers.forEach((i) => {
-                console.log('found item in party');
-                console.log(i);
-                console.log('Element ID: ' + i.id);
-                this.removeQueue.forEach((j) => {
-                    console.log('found item for removal');
-                    console.log(j);
-                    if (i.id == j.id) {
-                        console.log('deleting partyMember.id: ' + i.id + ' & removeQueue.id: ' + j.id)
-                        this.partyMembers.splice(j.id, 1);
-                        this.removeQueue.splice(j.id, 1)
-                        // bug: removes first applicable ID, but because array shifts it then removes 'incorrect' ID
-                        minusTrigger = true;
+
+            for (let i = 0; i < this.partyMembers.length; i++) {
+                console.log(this.partyMembers[i]);
+                for (let j = 0; j < this.removeQueue.length; j++) {
+                    console.log(this.removeQueue[j]);
+                    if (this.partyMembers[i].id == this.removeQueue[j].id) {
+                        console.log('found similar ID');
+                        this.partyMembers.splice(i, 1)
                         this.requestUpdate();
-                        if (minusTrigger === true) {
-                            console.log('trigger tripped...');
-                            i--;
-                            minusTrigger = false;
-                        }
                     }
-                    // need to compare rpgIDs and go from there for deletion
-                })
-                
-            })
-            
+                }
+            }
+
+            // document.querySelector('haxcms-party').shadowRoot.querySelector('.party-showcase').classList.remove('to-remove')
+
             if (this.removeQueue.lengh > 0) {
                 this.removeQueue.length = 0;
             }
-            // alert('Saved party');
+            
+            alert('Saved party');
         }
 
-        document.querySelector('haxcms-party').shadowRoot.querySelectorAll('#delete-btn').classList.remove('to-remove'); //need to figure out how to make this work
+        
         // needs to be able to to save to local storage any party member that is not part of a 'removed' class
-        // could use array to store changes (maybe)???
     }
 
-    // create a "reset" debug command, comment out when done, for testing purposes only
+    // create a "reset" debug command, comment out when done, for testing purposes only???
 
     static get properties() {
         return {
