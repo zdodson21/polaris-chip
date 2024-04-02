@@ -2,6 +2,7 @@ import { DDD } from "@lrnwebcomponents/d-d-d/d-d-d.js";
 import "@lrnwebcomponents/rpg-character/rpg-character.js";
 import { css, html } from 'lit';
 
+
 /**
  * https://github.com/elmsln/issues/issues/1950
  */
@@ -145,15 +146,17 @@ export class HaxCMSParty extends DDD {
                 </div>
                 <div class='party'>
                     <h2>Your Current Party</h2>
-                    <div class='party-showcase'>
-                        ${this.partyMembers.map((rpgCharacter) => html`
-                            <div class='user-character'>
-                                <rpg-character seed="${rpgCharacter.seed}" hat='${rpgCharacter.hat}' id='rpg-${rpgCharacter.id}' class='${rpgCharacter.seed}'></rpg-character> 
-                                <p style='text-align: center' class='${rpgCharacter.seed}'>${rpgCharacter.seed}</p>
-                                <button class='delete-btn' rpgID='${rpgCharacter.id}' @click=${this.removeUser}>Delete</button>
-                            </div>
-                        `)}
-                    </div>
+                    <confetti-container id='confetti'>
+                        <div class='party-showcase'>
+                            ${this.partyMembers.map((rpgCharacter) => html`
+                                <div class='user-character'>
+                                    <rpg-character seed="${rpgCharacter.seed}" hat='${rpgCharacter.hat}' id='rpg-${rpgCharacter.id}' class='${rpgCharacter.seed}'></rpg-character> 
+                                    <p style='text-align: center' class='${rpgCharacter.seed}'>${rpgCharacter.seed}</p>
+                                    <button class='delete-btn' rpgID='${rpgCharacter.id}' @click=${this.removeUser}>Delete</button>
+                                </div>
+                            `)}
+                        </div>
+                    </confetti-container>
                 </div>
                 <div class='confirmation-control'>
                     <button id='save' style='margin-top: var(--ddd-spacing-2);' @click=${this.saveParty}>Save</button>
@@ -167,8 +170,8 @@ export class HaxCMSParty extends DDD {
         e.preventDefault(); // prevents page refresh on form submission
         
         // const partyShowcaseSelector = document.querySelector('haxcms-party').shadowRoot.querySelector('.party .party-showcase');
-        const newMemberField = document.querySelector('haxcms-party').shadowRoot.querySelector('#add-user-text');
-        const hatSelection = document.querySelector('haxcms-party').shadowRoot.querySelector('#hat-select').value;
+        const newMemberField = this.shadowRoot.querySelector('#add-user-text');
+        const hatSelection = this.shadowRoot.querySelector('#hat-select').value;
         // console.log(hatSelection);
         const memberName = newMemberField.value.toLowerCase(); // TODO need to change so only lower case and numbers is allowed, no spaces or special characters
         let similarName = false;
@@ -239,7 +242,7 @@ export class HaxCMSParty extends DDD {
     }
 
     saveParty() {
-        console.log('Save pressed...')
+        // console.log('Save pressed...')
 
 
         if (this.partyMembers.length <= 0) {
@@ -254,26 +257,31 @@ export class HaxCMSParty extends DDD {
             */
 
             for (let i = 0; i < this.partyMembers.length; i++) {
-                console.log(this.partyMembers[i]);
+                // console.log(this.partyMembers[i]);
                 for (let j = 0; j < this.removeQueue.length; j++) {
-                    console.log(this.removeQueue[j]);
+                    // console.log(this.removeQueue[j]);
                     if (this.partyMembers[i].id == this.removeQueue[j].id) {
-                        console.log('found similar ID');
+                        // console.log('found similar ID');
                         this.partyMembers.splice(i, 1);
                         this.requestUpdate();
                     }
                 }
             }
 
+            // Does not work while entering characters randomly :(
+
             if (this.removeQueue.lengh > 0) {
                 this.removeQueue.length = 0;
             }
             
-            alert('Saved party');
-        }
+            this.makeItRain();
 
-        const fixClassList = document.querySelector('haxcms-party').shadowRoot.querySelectorAll('.user-character');
-        const fixButtonText = document.querySelector('haxcms-party').shadowRoot.querySelectorAll('.delete-btn');
+            // alert('Saved party');
+        }
+        
+
+        const fixClassList = this.shadowRoot.querySelectorAll('.user-character');
+        const fixButtonText = this.shadowRoot.querySelectorAll('.delete-btn');
 
         fixClassList.forEach((element) => {
             if (element.classList.contains('to-remove')) {
@@ -288,6 +296,26 @@ export class HaxCMSParty extends DDD {
         this.borderController();
         // needs to be able to to save to local storage any party member that is not part of a 'removed' class
     }
+
+    makeItRain() {
+        // console.log('makeItRain() called...')
+        import("@lrnwebcomponents/multiple-choice/lib/confetti-container.js").then(
+          (module) => {
+            // console.log('module')
+            // This is a minor timing 'hack'. We know the code library above will import prior to this running
+            // The "set timeout 0" means "wait 1 microtask and run it on the next cycle.
+            // this "hack" ensures the element has had time to process in the DOM so that when we set popped
+            // it's listening for changes so it can react
+            setTimeout(() => {
+                // console.log('timeout')
+              // forcibly set the poppped attribute on something with id confetti
+              // while I've said in general NOT to do this, the confetti container element will reset this
+              // after the animation runs so it's a simple way to generate the effect over and over again
+              this.shadowRoot.querySelector("#confetti").setAttribute("popped", "");
+            }, 0);
+          }
+        );
+      }
 
     // create a "reset" debug command, comment out when done, for testing purposes only???
 
