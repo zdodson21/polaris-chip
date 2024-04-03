@@ -154,54 +154,56 @@ export class HaxCMSParty extends DDD {
     render() {
         return html `
             <div class='haxcms-party-container'>
-                <div class='add-members'>
-                    <h2 style='text-align: center;'>Add Members</h2>
-                    <div class='details-container'>
-                        <details class='rules'>
-                            <summary>Naming Rules</summary>
-                            <p>Naming Rules: Names must consist of <u>lowercase letters</u> and <u>numbers</u></p>
-                        </details>
-                    </div>
-                    <form class='add-input' @submit=${this.addUser}>
-                        <div class='add-party-member'>
-                            <label for="character-name">Party Member Name:</label><br>
-                            <input type='text' name='character-name' placeholder='Type Name Here...' id='add-user-text'/>
-                            <input type="submit" value='Add User'> <br>
+                <confetti-container id='confetti'>
+                    <div class='add-members'>
+                        <h2 style='text-align: center;'>Add Members</h2>
+                        <div class='details-container'>
+                            <details class='rules'>
+                                <summary>Naming Rules</summary>
+                                <p>Naming Rules: Names must consist of <u>lowercase letters</u> and <u>numbers</u></p>
+                            </details>
                         </div>
-                        <div class='select-hat'>
-                            <select name="hats" id="hat-select">
-                                <option value="none">--Please Select a Hat--</option>
-                                <option value="bunny">Bunny</option>
-                                <option value="coffee">Coffee</option>
-                                <option value="construction">Construction</option>                        
-                                <option value="cowboy">Cowboy</option>
-                                <option value="education">Education</option>
-                                <option value="knight">Knight</option>
-                                <option value="ninja">Ninja</option>
-                                <option value="party">Party</option>
-                                <option value="pirate">Pirate</option>
-                                <option value="watermelon">Watermelon</option>
-                            </select>
-                        </div>
-                    </form>
-                </div>
-                    <div class='party'>
-                        <h2 class='party-members-header'>No Party Members</h2>
-                        <confetti-container id='confetti'>
-                            <div class='party-showcase'>
-                                ${this.partyMembers.map((rpgCharacter) => html`
-                                    <div class='user-character'>
-                                        <rpg-character seed="${rpgCharacter.seed}" hat='${rpgCharacter.hat}' id='rpg-${rpgCharacter.id}' class='${rpgCharacter.seed}'></rpg-character> 
-                                        <p style='text-align: center' class='${rpgCharacter.seed}'>${rpgCharacter.seed}</p>
-                                        <button style='opacity: 1;' class='delete-btn' rpgID='${rpgCharacter.id}' @click=${this.removeUser}>Delete</button>
-                                    </div>
-                                `)}
+                        <form class='add-input' @submit=${this.addUser}>
+                            <div class='add-party-member'>
+                                <label for="character-name">Party Member Name:</label><br>
+                                <input type='text' name='character-name' placeholder='Type Name Here...' id='add-user-text'/>
+                                <input type="submit" value='Add User'> <br>
                             </div>
-                        </confetti-container>
+                            <div class='select-hat'>
+                                <select name="hats" id="hat-select">
+                                    <option value="none">--Please Select a Hat--</option>
+                                    <option value="bunny">Bunny</option>
+                                    <option value="coffee">Coffee</option>
+                                    <option value="construction">Construction</option>                        
+                                    <option value="cowboy">Cowboy</option>
+                                    <option value="education">Education</option>
+                                    <option value="knight">Knight</option>
+                                    <option value="ninja">Ninja</option>
+                                    <option value="party">Party</option>
+                                    <option value="pirate">Pirate</option>
+                                    <option value="watermelon">Watermelon</option>
+                                </select>
+                            </div>
+                        </form>
                     </div>
-                <div class='confirmation-control'>
-                    <button id='save' style='margin-top: var(--ddd-spacing-2);' @click=${this.saveParty}>Save Members to Party</button>
-                </div>
+                        <div class='party'>
+                            <h2 class='party-members-header'>No Party Members</h2>
+                            
+                                <div class='party-showcase'>
+                                    ${this.partyMembers.map((rpgCharacter) => html`
+                                        <div class='user-character'>
+                                            <rpg-character seed="${rpgCharacter.seed}" hat='${rpgCharacter.hat}' id='rpg-${rpgCharacter.id}' class='${rpgCharacter.seed}'></rpg-character> 
+                                            <p style='text-align: center' class='${rpgCharacter.seed}'>${rpgCharacter.seed}</p>
+                                            <button style='opacity: 1;' class='delete-btn' rpgID='${rpgCharacter.id}' @click=${this.removeUser}>Delete</button>
+                                        </div>
+                                    `)}
+                                </div>
+                            
+                        </div>
+                    <div class='confirmation-control'>
+                        <button id='save' style='margin-top: var(--ddd-spacing-2);' @click=${this.saveParty}>Save Members to Party</button>
+                    </div>
+                </confetti-container>
             </div>
         `
     }
