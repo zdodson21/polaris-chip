@@ -53,7 +53,8 @@ export class HaxCMSParty extends DDD {
                     padding: var(--ddd-spacing-2);
                     border-color: var(--ddd-theme-default-potentialMidnight);
                     text-align: center;
-                    border-radius: var(--ddd-radius-md)
+                    border-radius: var(--ddd-radius-md);
+                    background-color: var(--ddd-theme-default-limestoneMaxLight);
                 }
                 
                 .add-input {
@@ -76,7 +77,7 @@ export class HaxCMSParty extends DDD {
                 }
 
                 .party-showcase {
-                    max-width: 575px;
+                    max-width: 664px;
                     /* min-width: 0px; */
                     display: flex;
                     flex: 1;
@@ -84,6 +85,7 @@ export class HaxCMSParty extends DDD {
                     flex-wrap: wrap;
                     padding: var(--ddd-spacing-2);
                     overflow-y: auto; /* For some reason does not work??? */
+                    max-height: 524px;
                 }
 
                 .border {
@@ -94,9 +96,15 @@ export class HaxCMSParty extends DDD {
                 .user-character {
                     display: flex;
                     justify-content: center;
-                    width: 115px;
+                    align-items: center;
+                    max-width: 200px;
+                    min-width: 140px;
                     flex-wrap: wrap;
                     flex-direction: column;
+                    border: var(--ddd-border-md);
+                    margin: var(--ddd-spacing-1) var(--ddd-spacing-1);
+                    padding: var(--ddd-spacing-1);
+
                 }
 
                 .confirmation-control {
@@ -112,13 +120,15 @@ export class HaxCMSParty extends DDD {
                     opacity: 1;
                     width: 95%;
                     background-color: var(--ddd-theme-default-discoveryCoral);
-                    color: white;
+                    color: var(--ddd-theme-default-white);
+                    font-size: 11px;
+                    height: 24px;
                 }
 
                 .to-remove .delete-btn {
-                    opacity: 1;
+                    opacity: 1 !important; 
                     background-color: var(--ddd-theme-default-futureLime);
-                    color: black;
+                    color: var(--ddd-theme-default-potentialMidnight);
                 }
 
                 h2 {
@@ -133,6 +143,10 @@ export class HaxCMSParty extends DDD {
                     font-size: 16px;
                 }
 
+                rpg-character {
+                    max-width: 142px;
+                }
+
             `
         ]
     }
@@ -144,7 +158,7 @@ export class HaxCMSParty extends DDD {
                     <h2 style='text-align: center;'>Add Members</h2>
                     <div class='details-container'>
                         <details class='rules'>
-                            <summary>Rules</summary>
+                            <summary>Naming Rules</summary>
                             <p>Naming Rules: Names must consist of <u>lowercase letters</u> and <u>numbers</u></p>
                         </details>
                     </div>
@@ -171,20 +185,20 @@ export class HaxCMSParty extends DDD {
                         </div>
                     </form>
                 </div>
-                <div class='party'>
-                    <h2>Your Current Party</h2>
-                    <confetti-container id='confetti'>
-                        <div class='party-showcase'>
-                            ${this.partyMembers.map((rpgCharacter) => html`
-                                <div class='user-character'>
-                                    <rpg-character seed="${rpgCharacter.seed}" hat='${rpgCharacter.hat}' id='rpg-${rpgCharacter.id}' class='${rpgCharacter.seed}'></rpg-character> 
-                                    <p style='text-align: center' class='${rpgCharacter.seed}'>${rpgCharacter.seed}</p>
-                                    <button style='opacity: 1;' class='delete-btn' rpgID='${rpgCharacter.id}' @click=${this.removeUser}>Delete</button>
-                                </div>
-                            `)}
-                        </div>
-                    </confetti-container>
-                </div>
+                    <div class='party'>
+                        <h2 class='party-members-header'>No Party Members</h2>
+                        <confetti-container id='confetti'>
+                            <div class='party-showcase'>
+                                ${this.partyMembers.map((rpgCharacter) => html`
+                                    <div class='user-character'>
+                                        <rpg-character seed="${rpgCharacter.seed}" hat='${rpgCharacter.hat}' id='rpg-${rpgCharacter.id}' class='${rpgCharacter.seed}'></rpg-character> 
+                                        <p style='text-align: center' class='${rpgCharacter.seed}'>${rpgCharacter.seed}</p>
+                                        <button style='opacity: 1;' class='delete-btn' rpgID='${rpgCharacter.id}' @click=${this.removeUser}>Delete</button>
+                                    </div>
+                                `)}
+                            </div>
+                        </confetti-container>
+                    </div>
                 <div class='confirmation-control'>
                     <button id='save' style='margin-top: var(--ddd-spacing-2);' @click=${this.saveParty}>Save Members to Party</button>
                 </div>
@@ -256,8 +270,10 @@ export class HaxCMSParty extends DDD {
             // console.log('removing from delete queue...')
             targetClassList.remove("to-remove");
             // console.log(targetClassList)
-            const index = this.removeQueue.indexOf(removeID) + 1;
-            // console.log(index)
+            const index = this.removeQueue.findIndex((object) => {
+                return object.id === rpgID;
+            });
+            console.log('Index: ' + index); // always outputting 'Index 0'
             if (index > -1) {
                 this.removeQueue.splice(index, 1); // always deleting first index for some reason
             }
@@ -301,6 +317,7 @@ export class HaxCMSParty extends DDD {
 
             if (this.partyMembers.length > 0) {
                 this.makeItRain();
+                this.playCoinSound();
             }
             
             this.formatFixer();
@@ -360,13 +377,28 @@ export class HaxCMSParty extends DDD {
      */
     borderController() {
         const showcase = this.shadowRoot.querySelector('.party-showcase');
+        const header = this.shadowRoot.querySelector('.party-members-header');
         
         if (this.partyMembers.length === 0) {
             showcase.classList.remove('border');
+            header.innerText = 'No Party Members'
         } else {
             showcase.classList.add('border');
+            header.innerText = 'Current Party Members';
         }
     }
+
+    // Sounds
+    playClickSound() {
+        const clickSound = new Audio();
+        clickSound.play();
+    }
+    
+    playCoinSound() {
+        const coinSound = new Audio('../media/media_coin sound.wav');
+        coinSound.play;
+    }
+
 
     static get properties() {
         return {
