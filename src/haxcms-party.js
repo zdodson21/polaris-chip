@@ -25,8 +25,6 @@ export class HaxCMSParty extends DDD {
         return [
             super.styles,
             css`
-                @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
                 /*               
                 CSS is based around variables / standards of 'Design, Develop, Destroy' (DDD). Styleguide for DDD can be found at the link below
 
@@ -38,9 +36,24 @@ export class HaxCMSParty extends DDD {
                 
                 .haxcms-party-container {
                     border: var(--ddd-border-md);
-                    border-color: black;
+                    border-color: var(--ddd-theme-default-potentialMidnight);
                     padding: var(--ddd-spacing-2);
-                    /* set width using @media */
+                    background-color: var(--simple-colors-default-theme-grey-2);
+
+                }
+
+                .details-container {
+                    display: flex;
+                    justify-content: center;
+                }
+
+                .rules {
+                    width: 50%;
+                    border: var(--ddd-border-md);
+                    padding: var(--ddd-spacing-2);
+                    border-color: var(--ddd-theme-default-potentialMidnight);
+                    text-align: center;
+                    border-radius: var(--ddd-radius-md)
                 }
                 
                 .add-input {
@@ -74,7 +87,8 @@ export class HaxCMSParty extends DDD {
                 }
 
                 .border {
-                    border-style: solid;
+                    border: var(--ddd-border-md);
+                    border-color: var(--ddd-theme-default-potentialMidnight);
                 }
 
                 .user-character {
@@ -102,13 +116,20 @@ export class HaxCMSParty extends DDD {
                 }
 
                 .to-remove .delete-btn {
-                    opacity: 1.5;
+                    opacity: 1;
                     background-color: var(--ddd-theme-default-futureLime);
                     color: black;
                 }
 
-                h2, h6 {
+                h2 {
                     text-align: center;
+                    font-family: "Press Start 2P", var(--ddd-font-primary);
+                    font-size: 24px;
+                }
+
+                button, input, select {
+                    font-family: "Press Start 2P", var(--ddd-font-primary);
+                    font-size: 16px;
                 }
 
             `
@@ -120,7 +141,12 @@ export class HaxCMSParty extends DDD {
             <div class='haxcms-party-container'>
                 <div class='add-members'>
                     <h2 style='text-align: center;'>Add Members</h2>
-                    <h6>Naming Rules: Names must consist of lowercase letters and numbers</h6>
+                    <div class='details-container'>
+                        <details class='rules'>
+                            <summary>Rules</summary>
+                            <p>Naming Rules: Names must consist of <u>lowercase letters</u> and <u>numbers</u></p>
+                        </details>
+                    </div>
                     <form class='add-input' @submit=${this.addUser}>
                         <div class='add-party-member'>
                             <label for="character-name">Party Member Name:</label><br>
@@ -152,7 +178,7 @@ export class HaxCMSParty extends DDD {
                                 <div class='user-character'>
                                     <rpg-character seed="${rpgCharacter.seed}" hat='${rpgCharacter.hat}' id='rpg-${rpgCharacter.id}' class='${rpgCharacter.seed}'></rpg-character> 
                                     <p style='text-align: center' class='${rpgCharacter.seed}'>${rpgCharacter.seed}</p>
-                                    <button class='delete-btn' rpgID='${rpgCharacter.id}' @click=${this.removeUser}>Delete</button>
+                                    <button style='opacity: 1;' class='delete-btn' rpgID='${rpgCharacter.id}' @click=${this.removeUser}>Delete</button>
                                 </div>
                             `)}
                         </div>
@@ -203,7 +229,7 @@ export class HaxCMSParty extends DDD {
             this.partyMembers.push(rpgCharacter);
             this.requestUpdate();
         } else { // Name does not pass restrictions
-            alert('Party member name does not follow naming rules!');
+            alert('Please use only lowercase letters and numbers. Spaces and special characters are not allowed!');
             newMemberField.value = '';
         }
 
