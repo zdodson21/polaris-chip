@@ -125,6 +125,7 @@ export class HaxCMSParty extends DDD {
                     text-align: center;
                     font-family: "Press Start 2P", var(--ddd-font-primary);
                     font-size: 24px;
+                    text-decoration: underline;
                 }
 
                 button, input, select {
@@ -185,7 +186,7 @@ export class HaxCMSParty extends DDD {
                     </confetti-container>
                 </div>
                 <div class='confirmation-control'>
-                    <button id='save' style='margin-top: var(--ddd-spacing-2);' @click=${this.saveParty}>Save</button>
+                    <button id='save' style='margin-top: var(--ddd-spacing-2);' @click=${this.saveParty}>Save Members to Party</button>
                 </div>
             </div>
         `
@@ -246,7 +247,7 @@ export class HaxCMSParty extends DDD {
         // console.log(memberName)
         
         const removeID = {
-            id: rpgID
+            id: rpgID,
         }
 
         // console.log('removeUser called...');
@@ -258,7 +259,7 @@ export class HaxCMSParty extends DDD {
             const index = this.removeQueue.indexOf(removeID) + 1;
             // console.log(index)
             if (index > -1) {
-                this.removeQueue.splice(index, 1);
+                this.removeQueue.splice(index, 1); // always deleting first index for some reason
             }
             e.target.innerText = 'Delete';
             // console.log(this.removeQueue);
@@ -271,6 +272,7 @@ export class HaxCMSParty extends DDD {
             this.requestUpdate();
             // console.log(this.removeQueue);
         }
+        console.log(this.removeQueue)
 
     }
 
@@ -278,6 +280,7 @@ export class HaxCMSParty extends DDD {
      * Deletes objects in partyMembers[] who have the same 'rpgID' as the objects in removeQueue[]
      */
     saveParty() {
+        console.log(this.removeQueue)
         if (this.partyMembers.length <= 0) {
             alert('No party members!');
         } else {
@@ -285,10 +288,11 @@ export class HaxCMSParty extends DDD {
                 for (let j = 0; j < this.partyMembers.length; j++) {
                     if (this.partyMembers[j].id == this.removeQueue[i].id) {
                         this.partyMembers.splice(j, 1);
-                        this.requestUpdate();
                     }
                 }
             }
+            this.requestUpdate();
+            
 
             if (this.removeQueue.length > 0) {
                 this.removeQueue.length = 0;
