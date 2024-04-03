@@ -107,7 +107,7 @@ export class HaxCMSParty extends DDD {
                     color: black;
                 }
 
-                h2 {
+                h2, h6 {
                     text-align: center;
                 }
 
@@ -120,6 +120,7 @@ export class HaxCMSParty extends DDD {
             <div class='haxcms-party-container'>
                 <div class='add-members'>
                     <h2 style='text-align: center;'>Add Members</h2>
+                    <h6>Naming Rules: Names must consist of lowercase letters and numbers</h6>
                     <form class='add-input' @submit=${this.addUser}>
                         <div class='add-party-member'>
                             <label for="character-name">Party Member Name:</label><br>
@@ -164,7 +165,6 @@ export class HaxCMSParty extends DDD {
         `
     }
 
-
     /**
      * Pulls the value from the text input box, which is used to name the character and adds it to partyMembers[]
      */
@@ -173,7 +173,8 @@ export class HaxCMSParty extends DDD {
         
         const newMemberField = this.shadowRoot.querySelector('#add-user-text');
         const hatSelection = this.shadowRoot.querySelector('#hat-select').value;
-        const memberName = newMemberField.value.toLowerCase(); // TODO change to regex
+        const memberName = newMemberField.value.toLowerCase();
+        const regex = /^[a-z0-9]+$/;
         let similarName = false;
 
         this.partyMembers.forEach((i) => {
@@ -184,14 +185,14 @@ export class HaxCMSParty extends DDD {
             }
         })
 
-        if (memberName === '') {
+        if (memberName === '') { // Empty Input
             alert('Please input a name for your new party member!');
-        } else if (memberName.length > 10) {
+        } else if (memberName.length > 10) { // Input greater than 10 characters
             alert('Please shorten your member name to be less than 10 characters!');
-        } else if (similarName === true) {
+        } else if (similarName === true) { // Name already exists
             alert('Party member already exists!');
             newMemberField.value = '';
-        } else {
+        } else if (regex.test(memberName)) { // Correct name, passes restrictions
             newMemberField.value = '';
 
             const rpgCharacter = {
@@ -201,12 +202,18 @@ export class HaxCMSParty extends DDD {
             }
             this.partyMembers.push(rpgCharacter);
             this.requestUpdate();
+        } else { // Name does not pass restrictions
+            alert('Party member name does not follow naming rules!');
+            newMemberField.value = '';
         }
+
         this.rpgId++;
         this.borderController();
     }
 
-
+    /**
+     * Adds or removes the target partyMember to the removeQueue[], characters are not deleted here
+     */
     removeUser(e) {
         const targetClassList = e.target.parentNode.classList;
         const rpgID = e.target.getAttribute('rpgID');
@@ -241,6 +248,9 @@ export class HaxCMSParty extends DDD {
 
     }
 
+    /**
+     * Deletes objects in partyMembers[] who have the same 'rpgID' as the objects in removeQueue[]
+     */
     saveParty() {
         if (this.partyMembers.length <= 0) {
             alert('No party members!');
@@ -266,9 +276,17 @@ export class HaxCMSParty extends DDD {
             this.formatFixer();
             this.borderController();
             console.log(this.partyMembers);
+            /*
+                The above console.log is for the last bullet point in the JS Logic Requirements.
+                I felt an alert was too intrusive and interruptive in this scenario, so it'll
+                console.log the array of party members as the visual.
+            */
         }
     }
 
+    /**
+     * Confetti!!!
+     */
     makeItRain() {
         // console.log('makeItRain() called...')
         import("@lrnwebcomponents/multiple-choice/lib/confetti-container.js").then(
@@ -289,6 +307,9 @@ export class HaxCMSParty extends DDD {
         );
       }
 
+    /**
+     * Fixes a formatting bug where some party members would inherit the 'to-remove' class from a deleted object, ensures formatting is correct after save
+     */
     formatFixer() {
         const fixClassList = this.shadowRoot.querySelectorAll('.user-character');
         const fixButtonText = this.shadowRoot.querySelectorAll('.delete-btn');
@@ -304,6 +325,9 @@ export class HaxCMSParty extends DDD {
         })
     }
 
+    /**
+     * Adds or removes '.border' to party showcase when characters are added or removed
+     */
     borderController() {
         const showcase = this.shadowRoot.querySelector('.party-showcase');
         
@@ -317,7 +341,6 @@ export class HaxCMSParty extends DDD {
     static get properties() {
         return {
             ...super.properties,
-            
         }
     }
 }
