@@ -26,7 +26,7 @@ export class HaxCMSParty extends DDD {
             super.styles,
             css`
                 /*               
-                CSS is based around variables / standards of 'Design, Develop, Destroy' (DDD). Styleguide for DDD can be found at the link below
+                CSS is based around variables / standards of 'Design, Develop, Destroy' (DDD). Styleguide for DDD can be found at the link below:
 
                 https://oer.hax.psu.edu/bto108/sites/haxcellence/documentation/ddd 
                 */
@@ -160,7 +160,7 @@ export class HaxCMSParty extends DDD {
                         <div class='details-container'>
                             <details class='rules'>
                                 <summary>Naming Rules</summary>
-                                <p>Naming Rules: Names must consist of <u>lowercase letters</u> and <u>numbers</u></p>
+                                <p>Names must consist of <u>lowercase letters</u> and <u>numbers</u>!</p>
                             </details>
                         </div>
                         <form class='add-input' @submit=${this.addUser}>
