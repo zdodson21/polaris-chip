@@ -166,7 +166,7 @@ export class HaxCMSParty extends DDD {
                         <div class='details-container'>
                             <details class='rules'>
                                 <summary>Naming Rules</summary>
-                                <p>Names must consist of <u>lowercase letters</u> and <u>numbers</u>!</p>
+                                <p>Names must consist of <u>lowercase letters</u>, <u>numbers</u>, and must be <u>less than or 10 characters long</u>!</p>
                             </details>
                         </div>
                         <form class='add-input' @submit=${this.addUser}>
@@ -322,7 +322,6 @@ export class HaxCMSParty extends DDD {
 
             if (this.partyMembers.length > 0) {
                 this.makeItRain();
-                this.playCoinSound();
             }
             
             this.formatFixer();
@@ -363,6 +362,7 @@ export class HaxCMSParty extends DDD {
      * Fixes a formatting bug where some party members would inherit the 'to-remove' class from a deleted object, ensures formatting is correct after save
      */
     formatFixer() {
+        // console.log('formatFixer() called...');
         const fixClassList = this.shadowRoot.querySelectorAll('.user-character');
         const fixButtonText = this.shadowRoot.querySelectorAll('.delete-btn');
 
