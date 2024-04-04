@@ -112,7 +112,7 @@ export class HaxCMSParty extends DDD {
                     justify-content: center;
                 }
 
-                .to-remove {
+                .to-remove rpg-character, .to-remove p{
                     opacity: 0.5;
                 }
 
