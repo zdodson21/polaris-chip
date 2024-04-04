@@ -125,10 +125,18 @@ export class HaxCMSParty extends DDD {
                     height: 24px;
                 }
 
+                .delete-btn:focus, .delete-btn:hover {
+                    background-color: var(--ddd-theme-default-original87Pink);
+                }
+
                 .to-remove .delete-btn {
                     opacity: 1 !important; 
                     background-color: var(--ddd-theme-default-futureLime);
                     color: var(--ddd-theme-default-potentialMidnight);
+                }
+
+                .to-remove .delete-btn:hover, .to-remove .delete-btn:focus {
+                    background-color: var(--ddd-theme-default-forestGreen)
                 }
 
                 h2 {
@@ -290,8 +298,7 @@ export class HaxCMSParty extends DDD {
             this.requestUpdate();
             // console.log(this.removeQueue);
         }
-        console.log(this.removeQueue)
-
+        console.log(this.removeQueue);
     }
 
     /**
