@@ -11,7 +11,7 @@ import { css, html } from 'lit';
 export class HaxCMSParty extends DDD {
 
     static get tag() {
-        return 'haxcms-party';
+        return 'haxcms-party-ui';
     }
 
     constructor() {
@@ -192,7 +192,7 @@ export class HaxCMSParty extends DDD {
                                 <div class='party-showcase'>
                                     ${this.partyMembers.map((rpgCharacter) => html`
                                         <div class='user-character'>
-                                            <rpg-character seed="${rpgCharacter.seed}" hat='${rpgCharacter.hat}' id='rpg-${rpgCharacter.id}' class='${rpgCharacter.seed}'></rpg-character> 
+                                            <rpg-character seed="${rpgCharacter.seed}" hat='${rpgCharacter.hat}' id='rpg-${rpgCharacter.id}' class='${rpgCharacter.seed}' alt='A user generated rpg character named ${rpgCharacter.seed}'></rpg-character> 
                                             <p style='text-align: center' class='${rpgCharacter.seed}'>${rpgCharacter.seed}</p>
                                             <button style='opacity: 1;' class='delete-btn' rpgID='${rpgCharacter.id}' @click=${this.removeUser}>Delete</button>
                                         </div>
