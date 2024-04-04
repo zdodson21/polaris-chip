@@ -194,17 +194,15 @@ export class HaxCMSParty extends DDD {
                     </div>
                         <div class='party'>
                             <h2 class='party-members-header'>No Party Members</h2>
-                            
-                                <div class='party-showcase'>
-                                    ${this.partyMembers.map((rpgCharacter) => html`
-                                        <div class='user-character'>
-                                            <rpg-character seed="${rpgCharacter.seed}" hat='${rpgCharacter.hat}' id='rpg-${rpgCharacter.id}' class='${rpgCharacter.seed}' alt='A user generated rpg character named ${rpgCharacter.seed}'></rpg-character> 
-                                            <p style='text-align: center' class='${rpgCharacter.seed}'>${rpgCharacter.seed}</p>
-                                            <button style='opacity: 1;' class='delete-btn' rpgID='${rpgCharacter.id}' @click=${this.removeUser}>Delete</button>
-                                        </div>
-                                    `)}
-                                </div>
-                            
+                            <div class='party-showcase'>
+                                ${this.partyMembers.map((rpgCharacter) => html`
+                                    <div class='user-character'>
+                                        <rpg-character seed="${rpgCharacter.seed}" hat='${rpgCharacter.hat}' id='rpg-${rpgCharacter.id}' class='${rpgCharacter.seed}' alt='A user generated rpg character named ${rpgCharacter.seed}'></rpg-character> 
+                                        <p style='text-align: center' class='${rpgCharacter.seed}'>${rpgCharacter.seed}</p>
+                                        <button style='opacity: 1;' class='delete-btn' rpgID='${rpgCharacter.id}' @click=${this.removeUser}>Delete</button>
+                                    </div>
+                                `)}
+                            </div>
                         </div>
                     <div class='confirmation-control'>
                         <button id='save' style='margin-top: var(--ddd-spacing-2);' @click=${this.saveParty}>Save Party Members</button>
