@@ -394,15 +394,15 @@ export class HaxCMSParty extends DDD {
     }
 
     // Sounds (couldn't find the files or links)
-    playClickSound() {
-        const clickSound = new Audio();
-        clickSound.play();
-    }
+    // playClickSound() {
+    //     const clickSound = new Audio();
+    //     clickSound.play();
+    // }
     
-    playCoinSound() {
-        const coinSound = new Audio('../media/media_coin sound.wav');
-        coinSound.play;
-    }
+    // playCoinSound() {
+    //     const coinSound = new Audio('../media/media_coin sound.wav');
+    //     coinSound.play;
+    // }
 
 
     static get properties() {
