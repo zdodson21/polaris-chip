@@ -172,7 +172,7 @@ export class HaxCMSParty extends DDD {
                         <form class='add-input' @submit=${this.addUser}>
                             <div class='add-party-member'>
                                 <label for="character-name">Party Member Name:</label><br>
-                                <input type='text' name='character-name' placeholder='Type Name Here...' id='add-user-text'/>
+                                <input type='text' name='character-name' placeholder='Type Name Here...' id='add-user-text' required>
                                 <input type="submit" value='Add User'> <br>
                             </div>
                             <div class='select-hat'>
