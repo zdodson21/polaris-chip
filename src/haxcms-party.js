@@ -117,7 +117,6 @@ export class HaxCMSParty extends DDD {
                 }
 
                 .delete-btn {
-                    opacity: 1;
                     width: 95%;
                     background-color: var(--ddd-theme-default-discoveryCoral);
                     color: var(--ddd-theme-default-white);
@@ -130,7 +129,6 @@ export class HaxCMSParty extends DDD {
                 }
 
                 .to-remove .delete-btn {
-                    opacity: 1 !important; 
                     background-color: var(--ddd-theme-default-futureLime);
                     color: var(--ddd-theme-default-potentialMidnight);
                 }
@@ -209,7 +207,7 @@ export class HaxCMSParty extends DDD {
                             
                         </div>
                     <div class='confirmation-control'>
-                        <button id='save' style='margin-top: var(--ddd-spacing-2);' @click=${this.saveParty}>Save Members to Party</button>
+                        <button id='save' style='margin-top: var(--ddd-spacing-2);' @click=${this.saveParty}>Save Party Members</button>
                     </div>
                 </confetti-container>
             </div>
@@ -283,7 +281,7 @@ export class HaxCMSParty extends DDD {
             const index = this.removeQueue.findIndex((object) => {
                 return object.id === rpgID;
             });
-            console.log('Index: ' + index); // always outputting 'Index 0'
+            // console.log('Index: ' + index); // always outputting 'Index 0'
             if (index > -1) {
                 this.removeQueue.splice(index, 1); // always deleting first index for some reason
             }
@@ -298,14 +296,14 @@ export class HaxCMSParty extends DDD {
             this.requestUpdate();
             // console.log(this.removeQueue);
         }
-        console.log(this.removeQueue);
+        // console.log(this.removeQueue);
     }
 
     /**
      * Deletes objects in partyMembers[] who have the same 'rpgID' as the objects in removeQueue[]
      */
     saveParty() {
-        console.log(this.removeQueue)
+        // console.log(this.removeQueue)
         if (this.partyMembers.length <= 0) {
             alert('No party members!');
         } else {
@@ -397,7 +395,7 @@ export class HaxCMSParty extends DDD {
         }
     }
 
-    // Sounds
+    // Sounds (couldn't find the files or links)
     playClickSound() {
         const clickSound = new Audio();
         clickSound.play();
