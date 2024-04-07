@@ -153,6 +153,22 @@ export class HaxCMSParty extends DDD {
                     max-width: 142px;
                 }
 
+                @media screen and (max-width: 425px) {
+                    select {
+                        width: 350px;
+                        font-size: 12px;
+                        text-align: center;
+                    }
+
+                    summary, p {
+                        font-size: 12px;
+                    }
+
+                    .party-showcase {
+                        max-width: 249px;
+                    }
+                }
+
             `
         ]
     }
